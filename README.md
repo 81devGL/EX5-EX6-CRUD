@@ -18,7 +18,7 @@ Allow discount (now expressed in dollars, to increase by %); apply discount to e
 
 Validating data fields
 
-Remove order ,Filter orders ,Edit order, Search order
+Remove order ,Filter orders ,Edit order, Search order, Multiple delete
 
 Report filtration by date (total order amount, total debt)
 
@@ -43,11 +43,14 @@ Cho phép giảm giá (hiện tại bằng tiền, sẽ phát triển thêm %); 
 
 Validate các trường thông tin.
 
-Xoá đơn hàng, Lọc đơn hàng, sửa đơn hàng,Search 
+Xoá đơn hàng, Lọc đơn hàng, sửa đơn hàng,Search, Xoá nhiều trường cùng lúc 
+
 Validate các trường thông tin.
-.
+
 Lọc báo cáo theo ngày( tổng tiền đơn hàng, tổng nợ, tổng số đơn).
+
 Show chi tiết đơn hàng.
+
 Tự động chọn 7 ngày gần nhất của danh sách đơn hàng.
 "
 
