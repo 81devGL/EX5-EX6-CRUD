@@ -27,7 +27,7 @@ Show order information
 Automatically pick the most recent 7 days
 
 
-"Mô tả "
+# "Mô tả "
 " 
 Tự động điền các trường thông tin khi chọn khách  hàng.
 
