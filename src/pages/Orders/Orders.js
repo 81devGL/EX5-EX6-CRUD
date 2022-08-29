@@ -2,11 +2,10 @@ import { useEffect, useState, useRef } from 'react';
 import styles from './Order.module.scss';
 import classNames from 'classnames/bind';
 
-import { FlexboxGrid, Pagination } from 'rsuite';
+import { FlexboxGrid, Pagination, Checkbox, Button } from 'rsuite';
 import { getOrders } from '../../ApiService/ApiOrder';
 
-
-import { handleString } from '../../components/Function/Function';
+import { handleString, removeString } from '../../components/Function/Function';
 import AddOrder from '../../components/Order/AddOrder/AddOrder';
 import Order from '../../components/Order/Orders/OrderTable';
 import { getAllAdress } from '../../ApiService/provincesApi';
@@ -14,30 +13,36 @@ import { getCustomer } from '../../ApiService/apiCustomer';
 import { getProducts } from '../../ApiService/apiProduct';
 import FilterOrder from '../../components/Order/FilterOrder/FilterOrder';
 import HeaderOrderInfo from '../../components/Order/Orders/OrderInfo/HeaderOrderInfo/HeaderOrderInfo';
-
+import DeleteMultiple from '../../components/Order/DeleteOrder/DeleteMultiple';
 
 function Orders() {
-
     const cx = classNames.bind(styles);
     const [wordEntered, setWordEntered] = useState('');
     const [activePage, setActivePage] = useState(1);
     const [customer, setCustomer] = useState([]);
     const [product, setProduct] = useState([]);
-
-    
-
+    const [isDelete, setIsDelete] = useState(false);
+    const [selectItem, setSelectItem] = useState([]);
     // array current
     const dataOrder = useRef();
     const [orders, setOrders] = useState([]);
     const [prodvice, setProvince] = useState();
 
     function deleteOrder(id) {
-        console.log(id);
         const newOrder = orders.filter((item) => {
             return item.id !== id;
         });
-        console.log(newOrder);
         setOrders(newOrder);
+    }
+    async function deleteMultiple() {
+        console.log(selectItem);
+      
+        const newOrder = await orders.filter((item) => {
+            return !selectItem.includes(item.id)
+        });
+        setOrders(newOrder);
+        setSelectItem([]);
+        setIsDelete(false)
     }
     //-----edit-------
     function editOrder(value, id) {
@@ -76,11 +81,11 @@ function Orders() {
         } else {
             setOrders(dataOrder.current);
         }
-    } 
+    }
     //getDATA
 
-    function renderReport(data){
-        setOrders(data)
+    function renderReport(data) {
+        setOrders(data);
     }
     //-----ADD------
     function getdata(data) {
@@ -88,12 +93,36 @@ function Orders() {
         if (data) return setOrders([...orders, data]);
     }
 
+
+
     //get data
     useEffect(() => {
         const fetchApi = async () => {
             try {
                 const orderItem = await getOrders();
-                setOrders(orderItem);
+                let date = await new Date();
+                let last = await new Date(date.getTime() - 7 * 24 * 60 * 60 * 1000);
+                let day = date.getDate();
+                let month = date.getMonth() + 1;
+                let year = date.getFullYear();
+                if (month < 10) month = '0' + month;
+                if (day < 10) day = '0' + day;
+                let lastday = last.getDate();
+                let lastMo = last.getMonth() + 1;
+                let lastY = last.getFullYear();
+                if (lastMo < 10) lastMo = '0' + lastMo;
+                if (lastday < 10) lastday = '0' + lastday;
+                let lastfday = lastY + lastMo + lastday;
+                let today = year + month + day;
+                const arrayreport = await orderItem.filter((item) => {
+                    const dateCreate = parseFloat(removeString(item.createDate));
+
+                    return dateCreate >= parseFloat(lastfday) && dateCreate <= parseFloat(today);
+                });
+                if (arrayreport) {
+                    setOrders(arrayreport);
+                } else setOrders(orderItem);
+
                 dataOrder.current = orderItem;
                 const prodvice = await getAllAdress();
                 setProvince(prodvice);
@@ -101,8 +130,6 @@ function Orders() {
                 setCustomer(dataCustomer);
                 const products = await getProducts();
                 setProduct(products);
-              
-           
             } catch (error) {
                 console.log(error);
             }
@@ -157,6 +184,16 @@ function Orders() {
         const end = start + 10;
         return i >= start && i < end;
     });
+    const getSelect = (e) => {
+        setSelectItem([...selectItem, e], setIsDelete(true));
+    };
+    const popSelect = (e) => {
+        const newSelect = selectItem.filter((item) => {
+            return item !== e;
+        });
+        setSelectItem(newSelect);
+    };
+    console.log(selectItem)
     return (
         <>
             <div className={cx('wrapper--dasboard')} id="wrapper--dasboard">
@@ -164,8 +201,7 @@ function Orders() {
                     <div className={cx('table--customer--header')}>
                         <div className={cx('wrapper--order--info')}>
                             <span className={cx('table--customer--title')}>Danh sách khách hàng </span>
-                            <HeaderOrderInfo  rootOrder = {dataOrder.current} renderReport ={renderReport} orders={orders}></HeaderOrderInfo>
-                           
+                            <HeaderOrderInfo rootOrder={dataOrder.current} renderReport={renderReport} orders={orders}></HeaderOrderInfo>
                         </div>
 
                         <div className={cx('table--customer--action')}>
@@ -183,6 +219,11 @@ function Orders() {
                             </div>
 
                             <div className={cx('wrapper--action--left')}>
+                                {isDelete && (
+                                    <DeleteMultiple item ={selectItem} deleteMultiple={deleteMultiple} appearance="primary" color="red">
+                                        Xoá{' '}
+                                    </DeleteMultiple>
+                                )}
                                 {orders && (
                                     <AddOrder
                                         product={product}
@@ -200,7 +241,8 @@ function Orders() {
                         </div>
                         <div className="customer--header--wrapper">
                             <FlexboxGrid align="middle" className="show-grid grid--title--customer">
-                                <FlexboxGrid.Item className="item--customer" colspan={3}>
+                                <FlexboxGrid.Item className="item--customer checkbox--listorder " colspan={4}>
+                                    <Checkbox> </Checkbox>
                                     MÃ HOÁ ĐƠN
                                 </FlexboxGrid.Item>
                                 <FlexboxGrid.Item className="item--customer" colspan={4}>
@@ -209,8 +251,8 @@ function Orders() {
                                 <FlexboxGrid.Item className="item--customer" colspan={3}>
                                     SỐ ĐIỆN THOẠI
                                 </FlexboxGrid.Item>
-                                <FlexboxGrid.Item className="item--customer" colspan={5}>
-                                   NGÀY TẠO
+                                <FlexboxGrid.Item className="item--customer" colspan={4}>
+                                    NGÀY TẠO
                                 </FlexboxGrid.Item>
                                 <FlexboxGrid.Item className="item--customer" colspan={4}>
                                     TỔNG TIỀN
@@ -241,6 +283,9 @@ function Orders() {
                                     prodvice={prodvice}
                                     product={product}
                                     orders={orders}
+                                    getSelect={getSelect}
+                                    popSelect={popSelect}
+
                                 />
                             );
                         })}

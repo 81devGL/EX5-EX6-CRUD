@@ -1,12 +1,14 @@
 import { Form as FromRsuite, FormGroup } from 'rsuite';
+import { useEffect, useState } from 'react';
+import { Form as FinalForm, Field } from 'react-final-form';
+
+import { handleDay } from '../../../../../ApiService/Apiservice';
+
 import RSDateRangePicker from '../../../../FinalFormComponent/RSDateRangePicker';
 import { numberWithCommas, totalOrderCartReport } from '../../../../Function/Function';
-import { Form as FinalForm, Field } from 'react-final-form';
 import { removeString } from '../../../../Function/Function';
-import { handleDay } from '../../../../../ApiService/Apiservice';
-import { useEffect, useState } from 'react';
 function HeaderOrderInfo(props) {
-    const { orders, renderReport, rootOrder } = props;
+    const { orders, renderReport, rootOrder} = props;
     const totalReport = totalOrderCartReport(orders, 'total');
     const totalDebit = totalOrderCartReport(orders, 'debit');
     const totalOrder = orders.length;
@@ -30,6 +32,7 @@ function HeaderOrderInfo(props) {
         let today = year + '-' + month + '-' + day;
         setArrayDay([today,lastfday]);
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [hanle]);
     const onSubmit = () => {};
 

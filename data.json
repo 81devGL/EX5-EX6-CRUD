@@ -732,7 +732,7 @@
       "id": 2022080051
     },
     {
-      "createDate": "2022-08-28",
+      "createDate": "2022-08-15",
       "gen": "nữ",
       "full_name": "hana taylor",
       "email": "hana@gmail.com",
@@ -740,7 +740,41 @@
       "city": "Tỉnh Cao Bằng",
       "districst": "Huyện Bảo Lạc",
       "mobile": "0999999577",
-      "idorder": 2022080052,
+      "idorder": 2022080054,
+      "customer": 1331541,
+      "product": [
+        {
+          "price": 1900000,
+          "name": "airpord 2",
+          "id": 7,
+          "number": "3",
+          "totalproduct": 5700000
+        },
+        {
+          "price": 1900000,
+          "name": "airpord 2",
+          "id": 7,
+          "number": "2",
+          "totalproduct": 3800000
+        }
+      ],
+      "total": 9500000,
+      "money": 9500000,
+      "status": "Hoàn thành",
+      "debit": 0,
+      "userCreate": "HalvorsonJeanne",
+      "id": 2022080054
+    },
+    {
+      "createDate": "2022-08-17",
+      "gen": "nữ",
+      "full_name": "hana taylor",
+      "email": "hana@gmail.com",
+      "dob": "1999-06-12",
+      "city": "Tỉnh Cao Bằng",
+      "districst": "Huyện Bảo Lạc",
+      "mobile": "0999999577",
+      "idorder": 2022080057,
       "customer": 1331541,
       "product": [
         {
@@ -752,18 +786,55 @@
         },
         {
           "price": 3000000,
-          "name": "Iphone 8",
-          "id": 3,
-          "number": "1",
-          "totalproduct": 3000000
+          "name": "Iphone 12",
+          "id": 4,
+          "number": "2",
+          "totalproduct": 6000000
         }
       ],
-      "total": 7000000,
-      "money": 7000000,
+      "total": 10000000,
+      "money": 10000000,
       "status": "Hoàn thành",
       "debit": 0,
       "userCreate": "HalvorsonJeanne",
-      "id": 2022080052
+      "id": 2022080057
+    },
+    {
+      "createDate": "2022-08-16",
+      "gen": "nữ",
+      "full_name": "Thêm mới lên đầu 2",
+      "email": "duytuanpp@gmail.com",
+      "dob": "2011-02-17",
+      "city": "Thành phố Hà Nội",
+      "districst": "Quận Long Biên",
+      "address": "Số 90 Trần Thái Tông",
+      "mobile": "0988888888",
+      "idorder": 2022080058,
+      "customer": 14411235,
+      "product": [
+        {
+          "price": 3000000,
+          "name": "Iphone 8",
+          "id": 3,
+          "number": "2",
+          "totalproduct": 6000000
+        },
+        {
+          "price": 3000000,
+          "name": "Iphone 12",
+          "id": 4,
+          "totalproduct": 9000000,
+          "number": "3"
+        }
+      ],
+      "total": 14000000,
+      "sale": 1000000,
+      "due": 0,
+      "money": 10000000,
+      "debit": 4000000,
+      "status": "Còn nợ",
+      "userCreate": "HalvorsonJeanne",
+      "id": 2022080058
     }
   ]
 }

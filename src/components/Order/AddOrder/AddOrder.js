@@ -1,11 +1,14 @@
 import { Modal, Button, Placeholder, ButtonToolbar, Icon, Popover, Whisper, FlexboxGrid } from 'rsuite';
+import { Form as FromRsuite, FormGroup, ControlLabel } from 'rsuite';
 import { useState, useRef, useEffect } from 'react';
 import { Form as FinalForm, Field } from 'react-final-form';
+import { FieldArray } from 'react-final-form-arrays';
 import PropTypes from 'prop-types';
+import arrayMutators from 'final-form-arrays';
+
 import { AddCustomerApi } from '../../../ApiService/apiCustomer';
 import { addOrderApi } from '../../../ApiService/ApiOrder';
-import { normalizePhone, totalHanlder } from '../../Function/Function';
-import { Form as FromRsuite, FormGroup, ControlLabel } from 'rsuite';
+import { today, handleDay } from '../../../ApiService/Apiservice';
 
 import TextCustomField from '../../FinalFormComponent/TextCustomField';
 import InputPickerCustomField from '../../FinalFormComponent/InputPickerCustomField';
@@ -14,9 +17,8 @@ import RadioCustomField from '../../FinalFormComponent/RadioCustomField';
 import UploadAvataFrom from '../../Customer/AddCustomer/UploadForm/UploadAvataFrom';
 import NumberCustomField from '../../FinalFormComponent/NumberCustomField';
 import NumberFormatField from '../../FinalFormComponent/NumberFormatField';
-import arrayMutators from 'final-form-arrays';
-import { FieldArray } from 'react-final-form-arrays';
-import { today } from '../../../ApiService/Apiservice';
+
+import { normalizePhone, totalHanlder } from '../../Function/Function';
 import { InfoOrder, MessValidate } from '../../SupportUser/Mess';
 import { openNotifi } from '../../SupportUser/Notify';
 
@@ -24,7 +26,6 @@ const AddOrder = (props) => {
     const { product, customer, orders, prodvice = ['Hà Nội'], onGetdata } = props;
     const [open, setOpen] = useState(false);
     const [user, setUser] = useState();
-
     const [idAvataCurrent, setIdAvataCurrent] = useState('');
     const [idRef, setIdRef] = useState('');
     const [dis, setDis] = useState([]);
@@ -48,7 +49,6 @@ const AddOrder = (props) => {
 
     // add item and rendering component parrent with callback
     const onSubmit = async (values) => {
-
         if (!values.city) {
             values.city = prodvice[0].name;
             if (!values.districst) {
@@ -60,12 +60,15 @@ const AddOrder = (props) => {
         }
         if (isDebit) {
             values.status = 'Còn nợ';
-            values.due = 0
+            values.due = 0;
         } else {
             values.status = 'Hoàn thành';
-            values.debit =0
+            values.debit = 0;
         }
-
+        if (values.createDate) {
+            values.createDate = handleDay(values.createDate);
+        }
+//add new customer
         if (!statusEdit) {
             let newCustomer = {
                 city: values.city,
@@ -77,18 +80,17 @@ const AddOrder = (props) => {
                 mobile: values.mobile,
                 gen: values.gen,
                 email: values.email,
-                idproduct: values.product,
                 idorder: values.idorder,
             };
-            await AddCustomerApi(newCustomer, openNotifi('success', 'customer', 'add') );
+            await AddCustomerApi(newCustomer, openNotifi('success', 'customer', 'add'));
         }
 
         let newValue = {
             ...values,
             mobile: values.mobile,
-            userCreate: user
+            userCreate: user,
         };
-        await addOrderApi(newValue, openNotifi('success','order','add'));
+        await addOrderApi(newValue, openNotifi('success', 'order', 'add'));
         await onGetdata(newValue);
 
         setOpen(false);
@@ -105,7 +107,6 @@ const AddOrder = (props) => {
     }
     function findProduct(id) {
         const dataProduct = product.find((item) => item.id === id);
-        console.log(dataProduct);
         return dataProduct;
     }
     function handleCity(city) {
@@ -113,12 +114,16 @@ const AddOrder = (props) => {
         const data = dataDis.districts.map((item) => ({ label: item.name, value: item.name }));
         setDis(data);
     }
-
+    const gen = [
+        { label: 'nam', value: 'nam' },
+        { label: 'nữ', value: 'nữ' },
+    ];
     const getIdRef = (id) => setIdRef(id);
 
     //validate
     const required = (value) => (value ? undefined : MessValidate.required);
     const validateMobile = (mobile) => {
+        // check mobile 'vietnam'
         let regex = /^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/;
         if (!mobile) {
             return MessValidate.requiredMobile;
@@ -132,10 +137,8 @@ const AddOrder = (props) => {
             return MessValidate.email;
         } else return undefined;
     };
-    const gen = [
-        { label: 'nam', value: 'nam' },
-        { label: 'nữ', value: 'nữ' },
-    ];
+
+//support user
     const speakerCus = (
         <Popover title="Lưu ý">
             <InfoOrder value="spOrderCreate" />
@@ -149,11 +152,13 @@ const AddOrder = (props) => {
 
     return (
         <>
-            <Button color="green" appearance="primary"   onClick={() => handleOpen()}>Tạo đơn hàng</Button>
+            <Button color="green" appearance="primary" onClick={() => handleOpen()}>
+                Tạo đơn hàng
+            </Button>
             <Modal overflow={false} size="lg" show={open} onHide={handleClose}>
                 <Modal.Header>
                     <Modal.Title>
-                        Thêm mới khách hàng
+                        Thêm mới đơn hàng 
                         <span className="title--addOrder">
                             Người lập: <u>{user}</u>{' '}
                         </span>
@@ -176,13 +181,11 @@ const AddOrder = (props) => {
                                 form: {
                                     mutators: { push, pop, remove },
                                 },
-                        
                             }) => (
                                 <FromRsuite onSubmit={handleSubmit} ref={saveData} className="from--addcustomer">
                                     {' '}
                                     <div className="grid--addOrder--wrapper">
                                         <div className="addorder--wrapper--info flexBetween">
-                                            
                                             <FormGroup classPrefix="">
                                                 <Field
                                                     name="createDate"
@@ -200,6 +203,7 @@ const AddOrder = (props) => {
                                                     valueKey="id"
                                                     placeholder="Họ tên..."
                                                     onSelect={(id) => {
+                                                        //Auto fill on select cusotmer
                                                         setDis(findCustomer(id).districts);
                                                         form.change('full_name', findCustomer(id).full_name);
                                                         form.change('email', findCustomer(id).email);
@@ -254,6 +258,7 @@ const AddOrder = (props) => {
                                                             disabled={statusEdit}
                                                             placeholder="___ ___ ____"
                                                             onBlur={(e) => {
+                                                                //auto create idorder
                                                                 form.change('idorder', orders[orders.length - 1].idorder + 1);
                                                                 let value = e.target.value;
                                                                 if (value) {
@@ -286,12 +291,11 @@ const AddOrder = (props) => {
                                                             placeholder=""
                                                             disabled={statusEdit}
                                                             onBlur={() => {
-                                                                if(!values.idorder ){
+                                                                if (!values.idorder) {
                                                                     form.change('idorder', orders[orders.length - 1].idorder + 1);
-                                                                }else if(!values.idorder && orders ===[]){
-                                                                    openNotifi('warning', 'order','add')
+                                                                } else if (!values.idorder && orders === []) {
+                                                                    openNotifi('warning', 'order', 'add');
                                                                 }
-                                                              
                                                             }}
                                                         ></Field>
 
@@ -350,13 +354,11 @@ const AddOrder = (props) => {
                                                         <ControlLabel classPrefix="addcustomer--name--after ">Quận/huyện</ControlLabel>
                                                     </FormGroup>
                                                     <FormGroup>
-                                                        <Field
-                                                            name="address"
-                                                            component={TextCustomField}
-                                                            placeholder="..."
-                                                        ></Field>
+                                                        <Field name="address" component={TextCustomField} placeholder="..."></Field>
 
-                                                        <ControlLabel classPrefix="addcustomer--name--after">Địa chỉ giao hàng</ControlLabel>
+                                                        <ControlLabel classPrefix="addcustomer--name--after">
+                                                            Địa chỉ giao hàng
+                                                        </ControlLabel>
                                                     </FormGroup>
                                                 </div>
                                             </div>
@@ -403,7 +405,7 @@ const AddOrder = (props) => {
                                                                             inputvalue={product}
                                                                             labelKey="name"
                                                                             valueKey="id"
-                                                                            // validate={required}
+                                                                  
                                                                             onSelect={(id) => {
                                                                                 form.change(`${name}.price`, findProduct(id).price);
                                                                                 form.change(`${name}.name`, findProduct(id).name);
@@ -431,7 +433,7 @@ const AddOrder = (props) => {
                                                                                     );
                                                                                     if (values.money) {
                                                                                         form.change(
-                                                                                            'total',
+                                                                                            'due',
                                                                                             findProduct(id).price *
                                                                                                 values.product[index].number -
                                                                                                 values.sale,
@@ -477,6 +479,7 @@ const AddOrder = (props) => {
                                                                             name={`${name}.number`}
                                                                             component={NumberCustomField}
                                                                             className="grid--addOrder--number"
+                                                                            validate={required}
                                                                             onChange={(e) => {
                                                                                 form.change(
                                                                                     `${name}.totalproduct`,
@@ -520,7 +523,11 @@ const AddOrder = (props) => {
                                                                         component={TextCustomField}
                                                                         disabled
                                                                     ></Field>
-                                                                    <i onClick={()=>remove('product',index)} class="fa-solid fa-minus"></i>{' '}
+                                                                    {/* remove product when click to minnus */}
+                                                                    <i
+                                                                        onClick={() => remove('product', index)}
+                                                                        class="fa-solid fa-minus"
+                                                                    ></i>{' '}
                                                                 </FlexboxGrid.Item>
                                                             </FlexboxGrid>
                                                         ))
@@ -530,19 +537,22 @@ const AddOrder = (props) => {
                                             <div className="addorder--voucher grid--handle">
                                                 <div>Giảm giá</div>
                                                 <FormGroup>
-                                                    
                                                     <Field
                                                         defaultstyle
                                                         name="sale"
-                                                        validate={function(e){if (e > values.total){  openNotifi('error','order','sale'); return '.' }else return undefined}}
+                                                        validate={function (e) {
+                                                            if (e > values.total) {
+                                                                openNotifi('error', 'order', 'sale');
+                                                                return '.';
+                                                            } else return undefined;
+                                                        }}
                                                         component={NumberFormatField}
                                                         onChange={(e) => {
                                                             const i = parseInt(e.target.value.replace(/[^0-9]/g, ''));
-                                                   
+
                                                             if (!i) {
                                                                 form.change('total', totalHanlder(values.product));
                                                             }
-
                                                             if (i) {
                                                                 form.change('total', totalHanlder(values.product) - i);
                                                                 if (i > totalHanlder(values.product)) {
@@ -552,7 +562,6 @@ const AddOrder = (props) => {
                                                                             form.change('due', values.money - values.total);
                                                                         } else {
                                                                             form.change('debit', values.total - values.money);
-                                                                     
                                                                         }
                                                                     }
                                                                 }
@@ -569,25 +578,29 @@ const AddOrder = (props) => {
                                             </div>
                                             <div className="addorder--credit grid--handle">
                                                 <div>Tổng tiền thanh toán </div>
-                                                <Button onClick={()=>{
-                                                    if(values.total){
-                                                        form.change('money',values.total )
-                                                        if(values.debit || values.due){
-                                                            form.change('debit',0)
-                                                            form.change('due',0)
-
+                                                <Button
+                                                    onClick={() => {
+                                                        if (values.total) {
+                                                            form.change('money', values.total);
+                                                            if (values.debit || values.due) {
+                                                                form.change('debit', 0);
+                                                                form.change('due', 0);
+                                                            }
                                                         }
-                                                    }
-                                                 
-                                                }} className='finsish--money' appearance="ghost"  size='xs' color="green">
-                                                trả hết
-                                                
-                                            </Button>
+                                                    }}
+                                                    className="finsish--money"
+                                                    appearance="ghost"
+                                                    size="xs"
+                                                    color="green"
+                                                >
+                                                    trả hết
+                                                </Button>
                                                 <FormGroup>
                                                     <Field
-                                                        step={100000}
+                                           
                                                         name="money"
                                                         component={NumberFormatField}
+                                                        validate={required}
                                                         placeholder=""
                                                         onChange={(e) => {
                                                             const i = parseInt(e.target.value.replace(/[^0-9]/g, ''));
@@ -601,6 +614,7 @@ const AddOrder = (props) => {
                                                         }}
                                                     ></Field>
                                                 </FormGroup>
+                                                {/* paymentamonut > total => handle due */}
                                                 {isDebit ? (
                                                     <div className="debit--wrapper">
                                                         <div className="affter--debit--due">Còn nợ </div>

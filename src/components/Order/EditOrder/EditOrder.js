@@ -1,23 +1,24 @@
 import { Modal, Button, Placeholder, ButtonToolbar, Icon, Popover, Whisper, FlexboxGrid } from 'rsuite';
+import { Form as FromRsuite, FormGroup, ControlLabel } from 'rsuite';
 import { useState, useRef, useEffect } from 'react';
 import { Form as FinalForm, Field } from 'react-final-form';
 import PropTypes from 'prop-types';
-import {  editOrderApi } from '../../../ApiService/ApiOrder';
-import { normalizePhone, totalHanlder } from '../../Function/Function';
-import { Form as FromRsuite, FormGroup, ControlLabel } from 'rsuite';
+import { FieldArray } from 'react-final-form-arrays';
+import arrayMutators from 'final-form-arrays';
+
+import { editOrderApi } from '../../../ApiService/ApiOrder';
+import { today } from '../../../ApiService/Apiservice';
 
 import TextCustomField from '../../FinalFormComponent/TextCustomField';
 import InputPickerCustomField from '../../FinalFormComponent/InputPickerCustomField';
 import DatePickerCustomField from '../../FinalFormComponent/DatePickerCustomField';
 import RadioCustomField from '../../FinalFormComponent/RadioCustomField';
-
 import NumberCustomField from '../../FinalFormComponent/NumberCustomField';
 import NumberFormatField from '../../FinalFormComponent/NumberFormatField';
-import arrayMutators from 'final-form-arrays';
-import { FieldArray } from 'react-final-form-arrays';
-import { today } from '../../../ApiService/Apiservice';
+
 import { InfoOrder, MessValidate } from '../../SupportUser/Mess';
 import { openNotifi } from '../../SupportUser/Notify';
+import { normalizePhone, totalHanlder } from '../../Function/Function';
 
 const EditOrder = (props) => {
     const { product, customer, orders, prodvice = ['Hà Nội'], editOrder, item } = props;
@@ -25,20 +26,15 @@ const EditOrder = (props) => {
     const [user, setUser] = useState();
     const [dis, setDis] = useState([]);
     const [statusEdit, setStatusEdit] = useState(true);
-    const [isDebit, setIsDebit] = useState();
+    const [isDebit, setIsDebit] = useState(item.debit > 0);
 
     useEffect(() => {
         const user = localStorage.getItem('lastName') + localStorage.getItem('firstName');
         setUser(user);
     }, []);
 
-    const handleOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = async () => {
-        setOpen(false);
-    };
+    const handleOpen = () => setOpen(true);
+    const handleClose = async () => setOpen(false);
     const saveData = useRef();
 
     // add item and rendering component parrent with callback
@@ -61,8 +57,8 @@ const EditOrder = (props) => {
             ...values,
             mobile: values.mobile,
         };
-        await editOrderApi(newValue,item.idoder, openNotifi('success','order', 'edit'));
-       await editOrder(newValue,item.idorder)
+        await editOrderApi(newValue, item.idoder, openNotifi('success', 'order', 'edit'));
+        await editOrder(newValue, item.idorder);
         setOpen(false);
     };
 
@@ -79,6 +75,10 @@ const EditOrder = (props) => {
         console.log(dataProduct);
         return dataProduct;
     }
+    const gen = [
+        { label: 'nam', value: 'nam' },
+        { label: 'nữ', value: 'nữ' },
+    ];
 
     //validate
     const required = (value) => (value ? undefined : MessValidate.required);
@@ -96,10 +96,7 @@ const EditOrder = (props) => {
             return MessValidate.email;
         } else return undefined;
     };
-    const gen = [
-        { label: 'nam', value: 'nam' },
-        { label: 'nữ', value: 'nữ' },
-    ];
+// 
     const speakerCus = (
         <Popover title="Lưu ý">
             <InfoOrder value="spEditOrderInfo" />
@@ -110,14 +107,15 @@ const EditOrder = (props) => {
             <InfoOrder value="spEditOrderID" />
         </Popover>
     );
+
+
     return (
         <>
             <i onClick={() => handleOpen()} className="fa-solid fa-pen-to-square editcustomer--buton"></i>
-
             <Modal overflow={false} size="lg" show={open} onHide={handleClose}>
                 <Modal.Header>
                     <Modal.Title>
-                     Sửa đơn hàng
+                        Sửa đơn hàng
                         <span className="title--addOrder">
                             Người lập: <u>{user}</u>{' '}
                         </span>
@@ -138,14 +136,13 @@ const EditOrder = (props) => {
                                 pristine,
                                 values,
                                 form: {
-                                    mutators: { push, pop },
+                                    mutators: { push, pop, remove },
                                 },
                             }) => (
                                 <FromRsuite onSubmit={handleSubmit} ref={saveData} className="from--addcustomer">
                                     {/* {' '}  <pre>{JSON.stringify(values, 0, 2)}</pre> */}
                                     <div className="grid--addOrder--wrapper">
                                         <div className="addorder--wrapper--info flexBetween">
-                                 
                                             <FormGroup classPrefix="">
                                                 <Field
                                                     name="createDate"
@@ -238,7 +235,6 @@ const EditOrder = (props) => {
                                                                         form.change('city', findCustomer(value).city);
                                                                         form.change('districst', findCustomer(value).distrist);
                                                                         openNotifi('warning', 'edit');
-
                                                                         setStatusEdit(false);
                                                                     }
                                                                 }
@@ -267,7 +263,6 @@ const EditOrder = (props) => {
                                                             disabled={statusEdit}
                                                             component={RadioCustomField}
                                                             inputvalue={gen}
-                                            
                                                             className="addorder--gen"
                                                             placeholder="..."
                                                         ></Field>
@@ -311,7 +306,9 @@ const EditOrder = (props) => {
                                                     <FormGroup>
                                                         <Field name="address" component={TextCustomField} placeholder="..."></Field>
 
-                                                        <ControlLabel classPrefix="addcustomer--name--after">Địa chỉ giao hàng</ControlLabel>
+                                                        <ControlLabel classPrefix="addcustomer--name--after">
+                                                            Địa chỉ giao hàng
+                                                        </ControlLabel>
                                                     </FormGroup>
                                                 </div>
                                             </div>
@@ -379,6 +376,7 @@ const EditOrder = (props) => {
                                                                                     }
                                                                                 }
                                                                             }}
+                                                                            //remove product => remove price, number, total
                                                                             onClean={() => {
                                                                                 if (
                                                                                     values.product[index].number ||
@@ -455,12 +453,10 @@ const EditOrder = (props) => {
                                                                 </FlexboxGrid.Item>
                                                                 <FlexboxGrid.Item className="minusproduct" colspan={2}>
                                                                     {' '}
-                                                                    <Field
-                                                                        name={`${name}.name`}
-                                                                        component={TextCustomField}
-                                                                        disabled
-                                                                    ></Field>
-                                                                    <i class="fa-solid fa-minus"></i>{' '}
+                                                                    <i
+                                                                        onClick={() => remove('product', index)}
+                                                                        class="fa-solid fa-minus"
+                                                                    ></i>{' '}
                                                                 </FlexboxGrid.Item>
                                                             </FlexboxGrid>
                                                         ))
@@ -475,7 +471,6 @@ const EditOrder = (props) => {
                                                         component={NumberFormatField}
                                                         onChange={(e) => {
                                                             const i = parseInt(e.target.value.replace(/[^0-9]/g, ''));
-
                                                             if (!i) {
                                                                 form.change('total', totalHanlder(values.product));
                                                             }
@@ -489,7 +484,6 @@ const EditOrder = (props) => {
                                                                             form.change('due', values.money - values.total);
                                                                         } else {
                                                                             form.change('debit', values.total - values.money);
-                                                                            console.log(values);
                                                                         }
                                                                     }
                                                                 }
@@ -524,7 +518,7 @@ const EditOrder = (props) => {
                                                         }}
                                                     ></Field>
                                                 </FormGroup>
-                                                {item.debit > 0 ? (
+                                                {isDebit > 0 ? (
                                                     <div className="debit--wrapper">
                                                         <div className="affter--debit--due">Còn nợ </div>
                                                         <FormGroup>
@@ -549,17 +543,15 @@ const EditOrder = (props) => {
 
                                         <ButtonToolbar className="buttons addcustomer--button--submit">
                                             <Button appearance="primary" type="submit" disabled={submitting || pristine} color="blue">
-                                                Cập nhật 
+                                                Cập nhật
                                             </Button>
                                             <Button
                                                 onClick={() => {
                                                     form.reset();
-                                                    setStatusEdit(false);
-                                                    setDis([]);
                                                 }}
                                                 color="blue"
                                             >
-                                                Nhập lại
+                                                Khôi phục
                                             </Button>
                                         </ButtonToolbar>
                                     </div>

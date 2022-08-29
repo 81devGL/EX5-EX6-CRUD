@@ -4,12 +4,15 @@ import { Form } from 'react-final-form';
 import PropTypes from 'prop-types';
 import { handleDeleteOrder } from '../../../ApiService/ApiOrder';
 import { openNotifi } from '../../SupportUser/Notify';
-const DeleteCustomer = (props) => {
-    const { item, deleteOrder } = props;
+const DeleteMultiple = (props) => {
+    const { item, deleteMultiple } = props;
     const onSubmit = async () => {
-        if (item.id) {
-            await handleDeleteOrder(item.id, openNotifi('success','order','delete'));
-            await deleteOrder(item.id);
+        if (item) {
+          await  item.forEach((id)=>{
+                 handleDeleteOrder(id, openNotifi('success','order','delete'));
+            })
+           
+            await deleteMultiple();
         } else {
             openNotifi('warning','order', 'delete');
         }
@@ -21,7 +24,7 @@ const DeleteCustomer = (props) => {
     const handleClose = () => setOpen(false);
     return (
         <>
-            <i className="fa-solid fa-trash deletecustomer--buton" onClick={() => handleOpen()}></i>
+          <Button onClick={()=>handleOpen()} appearance="primary" color='red'>Xoá </Button> 
             <Modal overflow={false} size={'lg'} show={open} onHide={handleClose}>
                 <Modal.Header>
                     <Modal.Title></Modal.Title>
@@ -32,7 +35,7 @@ const DeleteCustomer = (props) => {
                             onSubmit={onSubmit}
                             render={({ handleSubmit }) => (
                                 <form onSubmit={handleSubmit} className="from--addcustomer">
-                                    Cảnh báo, bạn có chắc chắn muốn xoá Hoá đơn "{item.idorder}"
+                                    Cảnh báo, bạn có chắc chắn muốn các xoá Hoá đơn này, sẽ không thể khôi phục ! "
                                     <div className="grid--addcustomer--wrapper">
                                         <div className="buttons addcustomer--button--submit">
                                             <Button onClick={handleClose} appearance="primary" type="submit">
@@ -54,8 +57,8 @@ const DeleteCustomer = (props) => {
         </>
     );
 };
-DeleteCustomer.protoType = {
+DeleteMultiple.protoType = {
     item: PropTypes.object.isRequired,
     deleteOrder: PropTypes.func.isRequired
 };
-export default DeleteCustomer;
+export default DeleteMultiple;

@@ -3,9 +3,9 @@ import arrayMutators from 'final-form-arrays';
 import { FieldArray } from 'react-final-form-arrays';
 import InputPickerCustomField from '../../components/FinalFormComponent/InputPickerCustomField';
 import NumberFormatField from '../../components/FinalFormComponent/NumberFormatField';
-import {FlexboxGrid, Icon} from 'rsuite'
+
 import NumberCustomField from '../../components/FinalFormComponent/NumberCustomField';
-function AddProduct() {
+function AddOrderss() {
     const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
     const gen = [
         { label: 'nam', value: 'nam' },
@@ -39,8 +39,7 @@ function AddProduct() {
                     return (
                         <form onSubmit={handleSubmit}>
                             <div className="buttons">
-                                <Icon icon = "plus" onClick={() => push('customers', undefined)}>
-                                </Icon>
+                        
                                 <button type="button" onClick={() => pop('customers')}>
                                     Remove Customer
                                 </button>
@@ -107,4 +106,4 @@ function AddProduct() {
     );
 }
 
-export default AddProduct;
+export default AddOrderss;

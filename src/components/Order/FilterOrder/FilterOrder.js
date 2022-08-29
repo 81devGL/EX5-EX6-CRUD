@@ -1,9 +1,10 @@
 import { useState } from 'react';
-
 import { Button, Placeholder, Drawer, ButtonToolbar } from 'rsuite';
 import { Form as FinalForm, Field } from 'react-final-form';
-import InputPickerCustomField from '../../FinalFormComponent/InputPickerCustomField';
 import { Form as FromRsuite, FormGroup } from 'rsuite';
+import PropTypes from 'prop-types';
+
+import InputPickerCustomField from '../../FinalFormComponent/InputPickerCustomField';
 import TextCustomField from '../../FinalFormComponent/TextCustomField';
 import { normalizePhone } from '../../Function/Function';
 
@@ -115,5 +116,10 @@ function FilterOrder(props) {
         </>
     );
 }
+FilterOrder.protoType = {
+    product: PropTypes.array.isRequired,
+    orders: PropTypes.array.isRequired,
+    filter: PropTypes.func.isRequired,
 
+};
 export default FilterOrder;
