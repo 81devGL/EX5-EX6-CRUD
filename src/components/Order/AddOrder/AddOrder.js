@@ -49,6 +49,7 @@ const AddOrder = (props) => {
 
     // add item and rendering component parrent with callback
     const onSubmit = async (values) => {
+
         if (!values.city) {
             values.city = prodvice[0].name;
             if (!values.districst) {
@@ -65,9 +66,11 @@ const AddOrder = (props) => {
             values.status = 'Hoàn thành';
             values.debit = 0;
         }
-        if (values.createDate) {
+        console.log(values.createDate)
+        if (values.createDate && values.createDate !=='2022-08-29') {
             values.createDate = handleDay(values.createDate);
         }
+        console.log(values.createDate)
 //add new customer
         if (!statusEdit) {
             let newCustomer = {
