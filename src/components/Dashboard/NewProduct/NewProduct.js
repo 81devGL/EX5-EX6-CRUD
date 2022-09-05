@@ -1,51 +1,28 @@
-function NewProduct() {
-    const ARRAY_ITEM_PRODUCT = [
-        {
-            id: 'SP202201',
-            name: 'Bàn chơi game',
-            email: 'admin@example.com',
-            sales: 70,
-            createDate: 'June 01, 2022',
-        },
-        {
-            id: 'SP202203',
-            name: 'Ghế công thái học',
-            email: 'admin2@example.com',
-            sales: 60,
-            createDate: 'June 01, 2022',
-        },
-        {
-            id: 'SP202204',
-            name: 'Bàn phím cơ',
-            email: 'admin3@example.com',
-            sales: 40,
-            createDate: 'June 01, 2022',
-        },
-        {
-            id: 'SP202205',
-            name: 'Tay cầm chơi game',
-            email: 'admin4@example.com',
-            sales: 34,
-            createDate: 'June 01, 2022',
-        },
-        {
-            id: 'SP202206',
-            name: 'Chuột gaming',
-            email: 'admin5@example.com',
-            sales: 33,
-            createDate: 'June 01, 2022',
-        },
-        {
-            id: 'SP202207',
-            name: 'Tai nghe không dây',
-            email: 'admin6@example.com',
-            sales: 20,
-            createDate: 'June 01, 2022',
-        },
-    ];
+function NewProduct(props) {
+    const { orders, product } = props;
+    // To sum the products, use the nested reduce technique.
+    let pro = product.map((e) => {
+        let num = orders.filter((element) => element.product.find((item) => item.id === e.id));
+        if (num.length >= 1) {
+            const total = num.reduce((ar, item) => {
+                ar += item.product.reduce((agr, item) => {
+                    if (item.id === e.id) agr += parseFloat(item.number);
+                    return agr;
+                }, 0);
+
+                return ar;
+            }, 0);
+            e.sale = total;
+        }
+
+        return e;
+    });
+    const newArr = pro.sort(function (a, b) {
+        return parseFloat(b.sale) - parseFloat(a.sale);
+    });
     return (
         <div className="table2--wrapper--item">
-            {ARRAY_ITEM_PRODUCT.map((item) => {
+            {newArr.map((item) => {
                 return (
                     <div className="table2--item">
                         {' '}
@@ -54,7 +31,7 @@ function NewProduct() {
                             <span className="table2--item--id">Mã SP: {item.id}</span>
                         </div>{' '}
                         <div className="table2--item--sale">
-                            <span className="table2--item--number">{item.sales}</span>
+                            <span className="table2--item--number">{item.sale}</span>
                             <span className="table2--item--des">Sales</span>
                         </div>
                     </div>

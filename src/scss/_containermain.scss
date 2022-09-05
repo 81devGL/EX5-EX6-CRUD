@@ -4,9 +4,12 @@
     background-color: $gray050;
     max-width: 1600px;
 }
+
 .main--page {
     flex: 1;
+
 }
+
 .wrapper--dasboard {
     width: 100%;
     height: 100%;
@@ -18,6 +21,7 @@
     padding: 16px;
     gap: 16px;
 }
+
 .wrapper--table1--table2 {
     display: flex;
     flex-direction: row;
@@ -27,24 +31,28 @@
     gap: 16px;
     max-width: 1317px;
     width: 100%;
-    height: 448px;
+    height: 680px;
 }
+
 //responsive the web
 @media only screen and (max-width: 1024px) {
     .wrapper--dasboard {
         width: $default-width-wrapper-table-tablet;
         left: $default-width-sidebar-tablet;
     }
+
     .wrapper--table1--table2 {
         width: $default-width-wrapper-table-tablet;
     }
 }
+
 @media only screen and (max-width: 768px) {
     .wrapper--table1--table2 {
         flex-direction: row;
         height: 448px;
     }
 }
+
 @media only screen and (max-width: 576px) {
     .wrapper--dasboard {
         width: 100vw;
@@ -52,6 +60,7 @@
         left: 0;
         padding: 16px;
     }
+
     .wrapper--table1--table2 {
         display: block;
         box-sizing: border-box;

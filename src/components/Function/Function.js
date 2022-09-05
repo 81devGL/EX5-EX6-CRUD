@@ -83,4 +83,25 @@ if(element === 'total'&& array){
   return total
 }
 }
-export { handleString, normalizePhone,numberWithCommas,totalHanlder,removeString ,totalOrderCartReport};
+
+const handleFilter = (value,array,setArray, refCustomer) => {
+  const newFilter = array.filter((item) => {
+    console.log(item)
+    if(!item.address) item.address = 'Hà nội'
+    if(!item.full_name) item.full_name ="aaaaaaaaa"
+    if(!item.mobile) item.mobile='000000000013'
+      return (
+          handleString(item.full_name).toLowerCase().includes(handleString(value).toLowerCase()) ||
+          item.mobile.toLowerCase().includes(value.toLowerCase()) ||
+          handleString(item.address).toLowerCase().includes(handleString(value).toLowerCase()) 
+      );
+  });
+
+  if (value === '') {
+    setArray(refCustomer);
+  } else {
+    setArray(newFilter);
+  }
+};
+
+export { handleString, normalizePhone,numberWithCommas,totalHanlder,removeString ,totalOrderCartReport,handleFilter};

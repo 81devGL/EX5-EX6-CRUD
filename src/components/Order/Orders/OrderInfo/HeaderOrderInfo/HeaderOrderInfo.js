@@ -9,9 +9,10 @@ import { numberWithCommas, totalOrderCartReport } from '../../../../Function/Fun
 import { removeString } from '../../../../Function/Function';
 function HeaderOrderInfo(props) {
     const { orders, renderReport, rootOrder} = props;
+    
     const totalReport = totalOrderCartReport(orders, 'total');
     const totalDebit = totalOrderCartReport(orders, 'debit');
-    const totalOrder = orders.length;
+    const totalOrder = orders.length
     const [tottal, setTotal] = useState();
     const [debit, setDebit] = useState();
     const [arrayDay, setArrayDay] = useState([]);

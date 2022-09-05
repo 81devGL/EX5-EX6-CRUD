@@ -8,8 +8,7 @@ InputPickerCustomField.propTypes = {
 }
 
 function InputPickerCustomField(props) {
-  const { inputstyle, inputvalue = [], inputclassname, input } = props
-
+  const { inputstyle, inputvalue = [], inputclassname, input,renderMenuItem,onSearch} = props
   return (
     <CustomField
       {...props}
@@ -21,20 +20,23 @@ function InputPickerCustomField(props) {
         if (value === "new") return
         input.onChange(value)
       }}
+      onSearch = {onSearch}
       virtualized={true}
       preventOverflow={true}
-      renderMenuItem={(label, item) => {
-        return (
-          <div
-            style={{
-              color: label === "Khác" ? "#2665CA" : "#374151",
-              fontStyle: label === "Khác" ? "italic" : "normal",
-            }}
-          >
-            {label}
-          </div>
-        )
-      }}
+      renderMenuItem = {renderMenuItem}
+      // renderMenuItem={(label, item) => {
+      //   console.log(label,item)
+      //   return (
+      //     <div
+      //       style={{
+      //         color: label === "Khác" ? "#2665CA" : "#374151",
+      //         fontStyle: label === "Khác" ? "italic" : "normal",
+      //       }}
+      //     >
+      //       {label}
+      //     </div>
+      //   )
+      // }}
     />
   )
 }

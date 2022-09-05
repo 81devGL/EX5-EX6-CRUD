@@ -25,7 +25,7 @@ function openNotifi(funcName, element, action) {
                     title: 'Xoá đơn hàng thành công !',
                     duration: 2000,
                 });
-            } else if(funcName ==='error'){
+            } else if (funcName === 'error') {
                 Notification[funcName]({
                     title: 'Xoá đơn hàng thất bại!',
                     duration: 2000,
@@ -37,13 +37,13 @@ function openNotifi(funcName, element, action) {
                     title: 'Sửa đơn hàng thành công !',
                     duration: 2000,
                 });
+            } else {
+                Notification[funcName]({
+                    title: 'Sửa đơn hàng thất bại!',
+                    duration: 2000,
+                });
             }
-        else  {
-            Notification[funcName]({
-                title: 'Sửa đơn hàng thất bại!',
-                duration: 2000,
-            });
-        }} 
+        }
         if (action === 'filter') {
             if (funcName === 'error')
                 Notification[funcName]({
@@ -51,51 +51,56 @@ function openNotifi(funcName, element, action) {
                     duration: 2000,
                 });
         }
-        if(action ==='sale'){
-            if(funcName === 'error'){
+        if (action === 'sale') {
+            if (funcName === 'error') {
                 Notification[funcName]({
                     title: 'Số tiền giảm giá không thể lớn hơn tổng đơn!',
                     duration: 2000,
                 });
             }
         }
-        
     } else if (element === 'customer') {
-        if (funcName === 'success') {
-            Notification[funcName]({
-                title: 'Tạo khách hàng thành công !',
-                duration: 2000,
-            });
-        } else {
-            Notification[funcName]({
-                title: 'Tạo khách hàng thất bại!',
-                duration: 2000,
-            });
+        if (action === 'add') {
+            if (funcName === 'success') {
+                Notification[funcName]({
+                    title: 'Tạo khách hàng thành công !',
+                    duration: 2000,
+                });
+            } else {
+                Notification[funcName]({
+                    title: 'Tạo khách hàng thất bại!',
+                    duration: 2000,
+                });
+            }
         }
         if (action === 'delete') {
-            if (funcName === 'success')
+            if (funcName === 'success') {
                 Notification[funcName]({
                     title: 'Xoá khách hàng thành công !',
                     duration: 2000,
                 });
-        } else {
-            Notification[funcName]({
-                title: 'Xoá khách hàng thất bại!',
-                duration: 2000,
-            });
+            } else {
+                Notification[funcName]({
+                    title: 'Xoá khách hàng thất bại!',
+                    duration: 2000,
+                });
+            }
         }
+
         if (action === 'edit') {
-            if (funcName === 'success')
+            if (funcName === 'success') {
                 Notification[funcName]({
                     title: 'Sửa khách hàng thành công !',
                     duration: 2000,
                 });
-        } else {
-            Notification[funcName]({
-                title: 'Sửa khách hàng thất bại!',
-                duration: 2000,
-            });
+            } else {
+                Notification[funcName]({
+                    title: 'Sửa khách hàng thất bại!',
+                    duration: 2000,
+                });
+            }
         }
+
         if (action === 'filter') {
             if (funcName === 'error')
                 Notification[funcName]({
@@ -105,5 +110,4 @@ function openNotifi(funcName, element, action) {
         }
     }
 }
-
 export { openNotifi };

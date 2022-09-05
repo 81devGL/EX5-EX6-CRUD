@@ -7,23 +7,21 @@ import OrderInfo from './OrderInfo/OrderInfo';
 import { numberWithCommas } from '../../Function/Function';
 import EditOrder from '../EditOrder/EditOrder';
 function Order(props) {
-    const { forcus: handleFocus, item: i, deleteOrder, getSelect, popSelect } = props;
+    const { forcus: handleFocus, item: i, deleteOrder, getSelect, popSelect, customer } = props;
     const [showInfo, setShowInfo] = useState(false);
-    const handleSelect = (value,checked) => {
-        console.log(checked)
+    // SELECT
+    const handleSelect = (value, checked) => {
         if (checked) {
             getSelect(i.id);
         } else {
-         popSelect(i.id)
+            popSelect(i.id);
         }
     };
-
     return (
         <>
             <div className={`grid--item--customer ${handleFocus}`}>
                 <FlexboxGrid align="middle" className="show-grid frontBold item--customer--grid">
                     <FlexboxGrid.Item colspan={4} className="checkbox--listorder">
-                        {' '}
                         <Checkbox onChange={handleSelect}> </Checkbox>
                         {i.idorder}
                     </FlexboxGrid.Item>
@@ -37,10 +35,12 @@ function Order(props) {
                         {i.status}
                     </FlexboxGrid.Item>
                     <FlexboxGrid.Item classPrefix="action--customer" colspan={3}>
-                        <EditOrder {...props} item={i}>
-                            {' '}
-                        </EditOrder>
-                        <DeleteOrder deleteOrder={deleteOrder} item={i} />
+                        {customer && (
+                            <EditOrder {...props} item={i}>
+                                {' '}
+                            </EditOrder>
+                        )}
+                        <DeleteOrder {...props} deleteOrder={deleteOrder} item={i} />
                         {showInfo ? (
                             <i class="fa-solid fa-chevron-up" onClick={() => setShowInfo(false)}>
                                 {' '}

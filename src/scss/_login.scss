@@ -1,41 +1,46 @@
-
-.login-wrapper{
-position: fixed !important;
-top:0; 
-bottom: 0;
-right: 0;
-left: 0;
-background-color: #f8f8f8;
-z-index: 10000 !important;
+.login-wrapper {
+  position: fixed !important;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: #f8f8f8;
+  z-index: 10000 !important;
 }
 
 
 .login-form {
 
-    text-align: center;
-    border:$separator-default;
-    border-radius: 8px;
-    background-color: #f8f8f8;
-    width: 500px;
-    position: fixed;
-    margin: auto;
-    top: 25%;
-    left: 25%;
-    right: 25%;
-  
-    
-    .login-form-input {
-   @include flexCenter;
-      margin-top: 20px;
-      position: relative;
-  
-      input {
-        padding-left: 16px;
-      }
-  
-      .input-lable-select {
-        width: 120px;
-        text-align: start;
-      }}}
+  text-align: center;
+  border: $separator-default;
+  border-radius: 8px;
+  background-color: #f8f8f8;
+  width: 500px;
+  position: fixed;
+  margin: auto;
+  top: 25%;
+  left: 25%;
+  right: 25%;
 
-      
+
+  .login-form-input {
+    @include flexCenter;
+    margin-top: 20px;
+    position: relative;
+
+    input {
+      padding-left: 16px;
+    }
+
+    .input-lable-select {
+      width: 120px;
+      text-align: start;
+    }
+  }
+}
+
+.lable--checkbox--login {
+  position: absolute;
+  left: 60px;
+  bottom: 32px
+}

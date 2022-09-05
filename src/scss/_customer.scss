@@ -12,6 +12,7 @@
     border-radius: 16px;
     padding: 16px;
     position: relative;
+
 }
 
 .table--customer {
@@ -318,16 +319,19 @@
 .item--customer--grid {
     height: 100%;
 }
-.item--customer{
+
+.item--customer {
     color: $gray500;
     font-size: 12px;
 }
+
 .action--customer {
     width: 120px;
     display: flex;
     justify-content: space-between;
     padding-left: 16px;
-    i{
+
+    i {
         cursor: pointer;
         padding: 4px;
         width: 16px;
@@ -364,7 +368,8 @@
     grid-template-rows: 60px;
     grid-gap: 40px;
 }
-.grid--addcustomer--groupdate{
+
+.grid--addcustomer--groupdate {
     display: flex;
     justify-content: flex-start;
     position: relative;
@@ -373,31 +378,34 @@
     align-items: center;
     gap: 32px;
 
-div{
-    position: relative;
- div{
-    form{
-        display: flex;
-   
-div{
-    div{
-        div{
-            input{
-                height: 60px;
+    div {
+        position: relative;
+
+        div {
+            form {
+                display: flex;
+
+                div {
+                    div {
+                        div {
+                            input {
+                                height: 60px;
+                            }
+                        }
+                    }
+                }
             }
         }
-    }
-}
-    }
- }
-  
-}
-div{
-    position: relative;
 
+    }
+
+    div {
+        position: relative;
+
+    }
 }
-}
-.gen--input{
+
+.gen--input {
     background-color: $white;
     height: 12px;
     width: 100px;
@@ -412,7 +420,8 @@ div{
     text-align: center;
     z-index: 10;
 }
-.gen--input--avata{
+
+.gen--input--avata {
     position: absolute;
     top: -24px;
     left: 16px;
@@ -426,12 +435,12 @@ div{
 .grid--addcustomer--item {
     display: flex;
     flex-direction: column;
-   
+
     position: relative;
     border-radius: 8px;
     border: none;
     align-items: flex-start;
-    
+
 }
 
 .grid--addcustomer--address {
@@ -442,6 +451,7 @@ div{
     border-radius: 8px;
     border: none;
     align-items: flex-start;
+
     div {
         width: 100%;
         height: 60px;
@@ -451,25 +461,27 @@ div{
 
             div {
                 width: 100%;
-                    a{
-                        height: 58px !important;
+
+                a {
+                    height: 58px !important;
+                    display: flex;
+                    align-items: center !important;
+
+                    span {
+                        height: 100%;
                         display: flex;
-                        align-items: center !important;
-                        span{
-                            height: 100%;
-                            display: flex;
-                            align-items: center;
-                        }
+                        align-items: center;
                     }
+                }
 
-                    div {
-                        width: 100%;
+                div {
+                    width: 100%;
 
-                        input {
-                            height: 60px;
-                        }
+                    input {
+                        height: 60px;
                     }
-                
+                }
+
             }
         }
 
@@ -639,34 +651,51 @@ div{
     cursor: pointer;
     padding: 4px;
 }
-.rs-picker-search-input{
+
+.rs-picker-search-input {
     display: flex !important;
     align-items: center !important;
 }
+
 ///
-.info--customer--table{
-height: 80px;
-width: 100%;
-padding-left: 16px;
-display: flex;
-justify-content: flex-start;
-align-items: center;
-gap: 32px;
+.info--customer--table {
+    height: 80px;
+    width: 100%;
+    padding-left: 16px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 32px;
 }
-.info--avata--wrapper{
+
+.info--avata--wrapper {
     height: 80px;
     border-radius: 12px;
-    
+
 
 }
-.info--des--wrapper{
+
+.info--des--wrapper {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 8px;
     flex-grow: 1;
 }
-#upload_img{display: none}
-.info--avata--wrapper{
+
+#upload_img {
+    display: none
+}
+
+.info--avata--wrapper {
     cursor: pointer;
+}
+
+.avata--dashbroad {
+    height: 32px;
+    border-radius: 50%;
+}
+
+#newCustomer {
+    position: relative;
 }

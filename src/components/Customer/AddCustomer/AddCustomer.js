@@ -14,7 +14,7 @@ import UploadAvataFrom from './UploadForm/UploadAvataFrom';
 
 const AddCustomer = (props) => {
     const { customer, prodvice, onGetdata, edit } = props;
-    console.log(props)
+    console.log(props);
     const [open, setOpen] = useState(false);
     const [dis, setDis] = useState([]);
     const [idEdit, setIdEdit] = useState('');
@@ -54,8 +54,8 @@ const AddCustomer = (props) => {
                     title: 'Khách hàng đã tồn tại !',
                     description: (
                         <span>
-                            Đã tự động chuyển sang CHẾ ĐỘ SỬA,<br></br> Nếu bạn muốn tiếp tục nhập Khách hàng mới, vui
-                            lòng chọn NHẬP LẠI và điền lại thông tin !
+                            Đã tự động chuyển sang CHẾ ĐỘ SỬA,<br></br> Nếu bạn muốn tiếp tục nhập Khách hàng mới, vui lòng chọn NHẬP LẠI và
+                            điền lại thông tin !
                         </span>
                     ),
                     duration: 8000,
@@ -76,7 +76,6 @@ const AddCustomer = (props) => {
 
     // add item and rendering component parrent with callback
     const onSubmit = async (values) => {
-
         if (!values.city) {
             values.city = prodvice[0].name;
         }
@@ -86,7 +85,6 @@ const AddCustomer = (props) => {
         if (values.mobile) {
             values.mobile = values.mobile.replace(/\s/g, '');
         }
-
 
         //hanlde format
         if (!cusEdit) {
@@ -112,23 +110,23 @@ const AddCustomer = (props) => {
             await onGetdata(newValue);
             setOpen(false);
         } else {
-        
-        let newValue = {
-            ...cusEdit,
-            city: values.city,
-            distrist: values.districst,
-            idproduct: 'Iphone X',
-            mobile: values.mobile,
-            dob: values.dob,
-            full_name: values.full_name,
-            gen: values.gen,
-            email: values.email,
-        };
-        await EditCustomerApi(newValue, idEdit, openNotifi('success', 'edit'));
-        await edit(newValue, idEdit);
-        setOpen(false);
+            let newValue = {
+                ...cusEdit,
+                city: values.city,
+                distrist: values.districst,
+                idproduct: 'Iphone X',
+                mobile: values.mobile,
+                dob: values.dob,
+                full_name: values.full_name,
+                gen: values.gen,
+                email: values.email,
+                totalCard: 0,
+            };
+            await EditCustomerApi(newValue, idEdit, openNotifi('success', 'edit'));
+            await edit(newValue, idEdit);
+            setOpen(false);
+        }
     };
-    }
     const data = prodvice.map((item) => ({ label: item.name, value: item.name }));
     const gen = [
         { label: 'nam', value: 'nam' },
@@ -193,9 +191,7 @@ const AddCustomer = (props) => {
                                                 className="addcustomer--input--name"
                                                 validate={required}
                                             ></Field>
-                                            <ControlLabel classPrefix="addcustomer--name--after ">
-                                                Tên khách hàng *
-                                            </ControlLabel>
+                                            <ControlLabel classPrefix="addcustomer--name--after ">Tên khách hàng *</ControlLabel>
                                         </FormGroup>
                                         <FormGroup classPrefix="grid--addcustomer--item">
                                             <Field
@@ -214,7 +210,7 @@ const AddCustomer = (props) => {
                                                         setDis(findCustomer(value).districts);
                                                         setIdEdit(findCustomer(value).id);
                                                         setCusEdit(findCustomer(value));
-                                                  
+
                                                         if (dis) {
                                                             form.change('full_name', findCustomer(value).full_name);
                                                             form.change('email', findCustomer(value).email);
@@ -225,12 +221,9 @@ const AddCustomer = (props) => {
                                                         }
                                                     }
                                                 }}
-                                    
                                             ></Field>
 
-                                            <ControlLabel classPrefix="addcustomer--name--after ">
-                                                Số Điện Thoại *
-                                            </ControlLabel>
+                                            <ControlLabel classPrefix="addcustomer--name--after ">Số Điện Thoại *</ControlLabel>
                                         </FormGroup>
                                         <FormGroup classPrefix="grid--addcustomer--address">
                                             <Field
@@ -240,9 +233,7 @@ const AddCustomer = (props) => {
                                                 placeholder="..."
                                             ></Field>
 
-                                            <ControlLabel classPrefix="addcustomer--name--after ">
-                                                Quận/huyện
-                                            </ControlLabel>
+                                            <ControlLabel classPrefix="addcustomer--name--after ">Quận/huyện</ControlLabel>
                                         </FormGroup>
                                         <FormGroup classPrefix="grid--addcustomer--address">
                                             <Field
@@ -255,41 +246,36 @@ const AddCustomer = (props) => {
                                                 }}
                                             ></Field>
 
-                                            <ControlLabel classPrefix="addcustomer--name--after ">
-                                                Tỉnh/ Thành phố
-                                            </ControlLabel>
+                                            <ControlLabel classPrefix="addcustomer--name--after ">Tỉnh/ Thành phố</ControlLabel>
                                         </FormGroup>
 
                                         <div className="grid--addcustomer--groupdate">
                                             <FormGroup>
                                                 <Field name="dob" component={DateInputField}></Field>
 
-                                                <ControlLabel classPrefix="addcustomer--name--after ">
-                                                    Ngày sinh
-                                                </ControlLabel>
+                                                <ControlLabel classPrefix="addcustomer--name--after ">Ngày sinh</ControlLabel>
                                             </FormGroup>
                                             <FormGroup>
                                                 <Field
                                                     name="gen"
                                                     component={RadioCustomField}
                                                     inputvalue={gen}
-                                                    
                                                     className="gen"
                                                     initialValue={'nữ'}
                                                 ></Field>
                                             </FormGroup>
-                                   
-                                                <FormGroup>
-                                                    <Field
-                                                        IdcusEdit={cusEdit.avata}
-                                                        getId={getIdRef}
-                                                        name="avata"
-                                                        component={UploadAvataFrom}
-                                                        {...props}
-                                                    ></Field>
 
-                                                    <ControlLabel className="gen--input--avata">Avata</ControlLabel>
-                                                </FormGroup>
+                                            <FormGroup>
+                                                <Field
+                                                    IdcusEdit={cusEdit.avata}
+                                                    getId={getIdRef}
+                                                    name="avata"
+                                                    component={UploadAvataFrom}
+                                                    {...props}
+                                                ></Field>
+
+                                                <ControlLabel className="gen--input--avata">Avata</ControlLabel>
+                                            </FormGroup>
                                         </div>
                                         <FormGroup classPrefix="grid--addcustomer--item">
                                             <Field
@@ -300,28 +286,16 @@ const AddCustomer = (props) => {
                                                 placeholder="___@gmail.com"
                                             ></Field>
 
-                                            <ControlLabel classPrefix="addcustomer--name--after">
-                                                Email liên hệ *
-                                            </ControlLabel>
+                                            <ControlLabel classPrefix="addcustomer--name--after">Email liên hệ *</ControlLabel>
                                         </FormGroup>
 
                                         <ButtonToolbar className="buttons addcustomer--button--submit">
                                             {!idEdit ? (
-                                                <Button
-                                                    appearance="primary"
-                                                    type="submit"
-                                                    disabled={submitting || pristine}
-                                                    color="green"
-                                                >
+                                                <Button appearance="primary" type="submit" disabled={submitting || pristine} color="green">
                                                     Tạo mới
                                                 </Button>
                                             ) : (
-                                                <Button
-                                                    appearance="primary"
-                                                    type="submit"
-                                                    disabled={submitting || pristine}
-                                                    color="violet"
-                                                >
+                                                <Button appearance="primary" type="submit" disabled={submitting || pristine} color="violet">
                                                     Cập nhật
                                                 </Button>
                                             )}
@@ -330,7 +304,7 @@ const AddCustomer = (props) => {
                                                 onClick={() => {
                                                     form.reset();
                                                     setIdEdit('');
-                                                    setCusEdit('')
+                                                    setCusEdit('');
                                                 }}
                                                 color="blue"
                                             >

@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import styles from './Order.module.scss';
 import classNames from 'classnames/bind';
 
-import { FlexboxGrid, Pagination, Checkbox, Button } from 'rsuite';
+import { FlexboxGrid, Pagination } from 'rsuite';
 import { getOrders } from '../../ApiService/ApiOrder';
 
 import { handleString, removeString } from '../../components/Function/Function';
@@ -35,14 +35,12 @@ function Orders() {
         setOrders(newOrder);
     }
     async function deleteMultiple() {
-        console.log(selectItem);
-      
         const newOrder = await orders.filter((item) => {
-            return !selectItem.includes(item.id)
+            return !selectItem.includes(item.id);
         });
         setOrders(newOrder);
         setSelectItem([]);
-        setIsDelete(false)
+        setIsDelete(false);
     }
     //-----edit-------
     function editOrder(value, id) {
@@ -93,8 +91,6 @@ function Orders() {
         if (data) return setOrders([...orders, data]);
     }
 
-
-
     //get data
     useEffect(() => {
         const fetchApi = async () => {
@@ -116,7 +112,6 @@ function Orders() {
                 let today = year + month + day;
                 const arrayreport = await orderItem.filter((item) => {
                     const dateCreate = parseFloat(removeString(item.createDate));
-
                     return dateCreate >= parseFloat(lastfday) && dateCreate <= parseFloat(today);
                 });
                 if (arrayreport) {
@@ -169,6 +164,7 @@ function Orders() {
     function handleSelect(eventKey) {
         setActivePage(eventKey);
     }
+    //add list districst
     const arrayCustomer = customer.map((item) => {
         if (prodvice) {
             const x = prodvice.find((i) => i.name === item.city);
@@ -178,12 +174,13 @@ function Orders() {
             return item;
         } else return item;
     });
-
+    //handle paging
     const data = [...orders].reverse().filter((v, i) => {
         const start = 10 * (activePage - 1);
         const end = start + 10;
         return i >= start && i < end;
     });
+
     const getSelect = (e) => {
         setSelectItem([...selectItem, e], setIsDelete(true));
     };
@@ -193,7 +190,21 @@ function Orders() {
         });
         setSelectItem(newSelect);
     };
-    console.log(selectItem)
+
+    // const handleCheckAll = (e, checked) => {
+
+    //     if (checked) {
+    //         const array = data.map((item)=> {return item.id})
+    //         setSelectItem(array);
+    //         setIsDelete(true);
+    //         setCheckall(true);
+    //     } else {
+    //         setSelectItem([]);
+    //         setIsDelete(false);
+    //         setCheckall(false);
+    //     }
+    // };
+
     return (
         <>
             <div className={cx('wrapper--dasboard')} id="wrapper--dasboard">
@@ -220,11 +231,11 @@ function Orders() {
 
                             <div className={cx('wrapper--action--left')}>
                                 {isDelete && (
-                                    <DeleteMultiple item ={selectItem} deleteMultiple={deleteMultiple} appearance="primary" color="red">
+                                    <DeleteMultiple item={selectItem} deleteMultiple={deleteMultiple} appearance="primary" color="red">
                                         Xoá{' '}
                                     </DeleteMultiple>
                                 )}
-                                {orders && (
+                                {orders && customer && product && (
                                     <AddOrder
                                         product={product}
                                         orders={orders}
@@ -242,7 +253,6 @@ function Orders() {
                         <div className="customer--header--wrapper">
                             <FlexboxGrid align="middle" className="show-grid grid--title--customer">
                                 <FlexboxGrid.Item className="item--customer checkbox--listorder " colspan={4}>
-                                    <Checkbox> </Checkbox>
                                     MÃ HOÁ ĐƠN
                                 </FlexboxGrid.Item>
                                 <FlexboxGrid.Item className="item--customer" colspan={4}>
@@ -285,7 +295,6 @@ function Orders() {
                                     orders={orders}
                                     getSelect={getSelect}
                                     popSelect={popSelect}
-
                                 />
                             );
                         })}

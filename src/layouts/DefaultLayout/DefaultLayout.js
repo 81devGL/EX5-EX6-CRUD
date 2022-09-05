@@ -5,11 +5,12 @@ import Login from '../../pages/Login/Login';
 
 function DefaultLayout({ children }) {
     const [user, setUser] = useState();
-   const getUser = (token)=>{
-                  setUser(token)
-   }
-   const token =  localStorage.getItem("token");
-    if (user ||token) {
+    const getUser = (token) => {
+        setUser(token);
+    };
+    const token = localStorage.getItem('token');
+    const token2 = sessionStorage.getItem('token');
+    if (user || token || token2) {
         return (
             <>
                 <Header />
@@ -19,7 +20,7 @@ function DefaultLayout({ children }) {
                 </div>
             </>
         );
-    } else return <Login getUser ={getUser}></Login>;
+    } else return <Login getUser={getUser}></Login>;
 }
 
 export default DefaultLayout;

@@ -8,17 +8,16 @@ const DeleteCustomer = (props) => {
     const { item, deleteOrder } = props;
     const onSubmit = async () => {
         if (item.id) {
-            await handleDeleteOrder(item.id, openNotifi('success','order','delete'));
+            await handleDeleteOrder(item.id, openNotifi('success', 'order', 'delete'));
             await deleteOrder(item.id);
         } else {
-            openNotifi('warning','order', 'delete');
+            openNotifi('warning', 'order', 'delete');
         }
     };
     const [open, setOpen] = useState(false);
-    const handleOpen = () => {
-        setOpen(true);
-    };
+    const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
     return (
         <>
             <i className="fa-solid fa-trash deletecustomer--buton" onClick={() => handleOpen()}></i>
@@ -56,6 +55,6 @@ const DeleteCustomer = (props) => {
 };
 DeleteCustomer.protoType = {
     item: PropTypes.object.isRequired,
-    deleteOrder: PropTypes.func.isRequired
+    deleteOrder: PropTypes.func.isRequired,
 };
 export default DeleteCustomer;

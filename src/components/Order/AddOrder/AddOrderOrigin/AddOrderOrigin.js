@@ -6,8 +6,9 @@ import { FieldArray } from 'react-final-form-arrays';
 import PropTypes from 'prop-types';
 import arrayMutators from 'final-form-arrays';
 
-import { editOrderApi } from '../../../ApiService/ApiOrder';
-import { today } from '../../../ApiService/Apiservice';
+import { AddCustomerApi } from '../../../ApiService/apiCustomer';
+import { addOrderApi } from '../../../ApiService/ApiOrder';
+import { today, handleDay } from '../../../ApiService/Apiservice';
 
 import TextCustomField from '../../FinalFormComponent/TextCustomField';
 import InputPickerCustomField from '../../FinalFormComponent/InputPickerCustomField';
@@ -22,26 +23,36 @@ import { InfoOrder, MessValidate } from '../../SupportUser/Mess';
 import { openNotifi } from '../../SupportUser/Notify';
 import CustomerInfoMenuSearch from '../../Customer/CustomerTable/CustomerInfo/CustomerInfoMenuSearch';
 
-const EditOrder = (props) => {
-    const { product, customer, orders, prodvice = ['Hà Nội'], editOrder, item } = props;
+const AddOrder = (props) => {
+    const { product, customer, orders, prodvice = ['Hà Nội'], onGetdata } = props;
+
+    const refCustomer = useRef();
+    refCustomer.current = customer;
     const [open, setOpen] = useState(false);
     const [user, setUser] = useState();
-    const [dis, setDis] = useState(customer.districts);
-    const [statusEdit, setStatusEdit] = useState(true);
-    const [isDebit, setIsDebit] = useState(item.debit > 0);
     const [idAvataCurrent, setIdAvataCurrent] = useState('');
+    const [idRef, setIdRef] = useState('');
+    const [dis, setDis] = useState([]);
+    const [statusEdit, setStatusEdit] = useState(false);
+    const [isDebit, setIsDebit] = useState();
     const [customerSearch, setCustomerSearch] = useState([]);
-    console.log(customer);
+    const listProductRef = useRef();
+    listProductRef.current = product;
+
     useEffect(() => {
         const user = localStorage.getItem('lastName') + localStorage.getItem('firstName');
+
         setUser(user);
-    }, []);
+    }, [product]);
 
     const handleOpen = () => {
         setOpen(true);
-        handleCity(item.city);
     };
-    const handleClose = async () => setOpen(false);
+
+    const handleClose = async () => {
+        setOpen(false);
+        setIdAvataCurrent('');
+    };
     const saveData = useRef();
 
     // add item and rendering component parrent with callback
@@ -55,19 +66,44 @@ const EditOrder = (props) => {
         if (values.mobile) {
             values.mobile = values.mobile.replace(/\s/g, '');
         }
-        if (values.debit > 0) {
+        if (isDebit) {
             values.status = 'Còn nợ';
+            values.due = 0;
         } else {
             values.status = 'Hoàn thành';
+            values.debit = 0;
+        }
+
+        if (values.createDate && values.createDate !== today) {
+            values.createDate = handleDay(values.createDate);
+        }
+        //add new customer
+        if (!statusEdit) {
+            let newCustomer = {
+                city: values.city,
+                address: values.address,
+                distrist: values.districst,
+                full_name: values.full_name,
+                note: values.note,
+                avata: `idavata${idRef}`,
+                mobile: values.mobile,
+                gen: values.gen,
+                email: values.email,
+                idorder: values.idorder,
+            };
+            await AddCustomerApi(newCustomer, openNotifi('success', 'customer', 'add'));
         }
 
         let newValue = {
             ...values,
             mobile: values.mobile,
+            userCreate: user,
         };
-        await editOrderApi(newValue, item.idorder, openNotifi('success', 'order', 'edit'));
-        await editOrder(newValue, item.idorder);
+        await addOrderApi(newValue, openNotifi('success', 'order', 'add'));
+        await onGetdata(newValue);
+
         setOpen(false);
+        setIdAvataCurrent('');
     };
     const data = prodvice.map((item) => ({ label: item.name, value: item.name }));
     const dataMobile = customer.map((item) => {
@@ -82,19 +118,29 @@ const EditOrder = (props) => {
         const dataProduct = product.find((item) => item.id === id);
         return dataProduct;
     }
-    const arrayVoucher = [
-        { label: '100,000đ', value: 100000 },
-        { label: 'Voucher 5% ', value: 5 },
-        { label: 'Voucher 15% ', value: 15 },
-    ];
+    function findProductCustomer(id, array) {
+        if (!array === []) {
+            console.log(array.find((item) => item.id === id));
+        }
+
+        return false;
+    }
+    function handleCity(city) {
+        const dataDis = prodvice.find((item) => item.name === city);
+        const data = dataDis.districts.map((item) => ({ label: item.name, value: item.name }));
+        setDis(data);
+    }
     const gen = [
         { label: 'nam', value: 'nam' },
         { label: 'nữ', value: 'nữ' },
     ];
+    const getIdRef = (id) => setIdRef(id);
+    //    const arrayName = customer.map((item)=>  ({ label: item.full_name, value: item.id }));
 
     //validate
     const required = (value) => (value ? undefined : MessValidate.required);
     const validateMobile = (mobile) => {
+        // check mobile 'vietnam'
         let regex = /^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/;
         if (!mobile) {
             return MessValidate.requiredMobile;
@@ -108,32 +154,27 @@ const EditOrder = (props) => {
             return MessValidate.email;
         } else return undefined;
     };
-    function findProductCustomer(id, array) {
-        if (!array === []) {
-            console.log(array.find((item) => item.id === id));
-        }
 
-        return false;
-    }
-    //
+    //support user
     const speakerCus = (
         <Popover title="Lưu ý">
-            <InfoOrder value="spEditOrderInfo" />
+            <InfoOrder value="spOrderCreate" />
         </Popover>
     );
     const speakerID = (
         <Popover title="Mã đơn hàng là bắt buộc và duy nhất !">
-            <InfoOrder value="spEditOrderID" />
+            <InfoOrder value="spOrderId" />
         </Popover>
     );
-    function handleCity(city) {
-        const dataDis = prodvice.find((item) => item.name === city);
-        const data = dataDis.districts.map((item) => ({ label: item.name, value: item.name }));
-        setDis(data);
-    }
+
+    // const getNumber =(data)=>{
+    //     setCount(data)
+    // }
     return (
         <>
-            <Icon className="blue" icon="pencil" onClick={() => handleOpen()}></Icon>
+            <Button color="green" appearance="primary" onClick={() => handleOpen()}>
+                Tạo đơn hàng
+            </Button>
             <Modal overflow={false} size="lg" show={open} onHide={handleClose}>
                 <Modal.Header>
                     <Modal.Title>
@@ -150,7 +191,7 @@ const EditOrder = (props) => {
                                 ...arrayMutators,
                             }}
                             onSubmit={onSubmit}
-                            initialValues={{ ...item }}
+                            initialValues={{}}
                             render={({
                                 handleSubmit,
                                 form,
@@ -158,7 +199,7 @@ const EditOrder = (props) => {
                                 pristine,
                                 values,
                                 form: {
-                                    mutators: { push, pop },
+                                    mutators: { push, pop, remove },
                                 },
                             }) => (
                                 <FromRsuite onSubmit={handleSubmit} ref={saveData} className="from--addcustomer">
@@ -196,6 +237,7 @@ const EditOrder = (props) => {
                                                             );
                                                         });
                                                         setCustomerSearch(newarray);
+                                                        console.log(customerSearch);
                                                     }}
                                                     onSelect={(id) => {
                                                         //Auto fill on select cusotmer
@@ -218,6 +260,7 @@ const EditOrder = (props) => {
                                                     onClean={() => {
                                                         form.reset();
                                                         setStatusEdit(false);
+                                                        setIdRef('');
                                                         setDis([]);
                                                         setStatusEdit(false);
                                                         setIdAvataCurrent('');
@@ -331,6 +374,9 @@ const EditOrder = (props) => {
                                                             disabled={statusEdit}
                                                             component={InputPickerCustomField}
                                                             inputvalue={data}
+                                                            onSelect={(value) => {
+                                                                handleCity(value);
+                                                            }}
                                                         ></Field>
 
                                                         <ControlLabel classPrefix="addcustomer--name--after ">Tỉnh/ Thành phố</ControlLabel>
@@ -360,6 +406,7 @@ const EditOrder = (props) => {
                                                     <Field
                                                         disabled={statusEdit}
                                                         IdcusEdit={idAvataCurrent}
+                                                        getId={getIdRef}
                                                         name="avata"
                                                         component={UploadAvataFrom}
                                                         {...props}
@@ -411,9 +458,6 @@ const EditOrder = (props) => {
                                                                             onSelect={(id) => {
                                                                                 form.change(`${name}.price`, findProduct(id).price);
                                                                                 form.change(`${name}.name`, findProduct(id).name);
-                                                                                form.change('money', 0);
-                                                                                form.change('debit', 0);
-                                                                                form.change('due', 0);
 
                                                                                 if (values.product[index]) {
                                                                                     form.change(
@@ -428,41 +472,20 @@ const EditOrder = (props) => {
                                                                                             index,
                                                                                         );
                                                                                     }
-                                                                                    if (values.sale < 100) {
+
+                                                                                    form.change(
+                                                                                        'total',
+                                                                                        valueTotalProduct +
+                                                                                            findProduct(id).price *
+                                                                                                values.product[index].number -
+                                                                                            values.sale,
+                                                                                    );
+                                                                                    if (values.money) {
                                                                                         form.change(
-                                                                                            'total',
-                                                                                            (
-                                                                                                (valueTotalProduct +
-                                                                                                    findProduct(id).price *
-                                                                                                        values.product[index].number -
-                                                                                                    values.sale * valueTotalProduct * 0.01 -
-                                                                                                    findProduct(id).price *
-                                                                                                        values.product[index].number *
-                                                                                                        values.sale *
-                                                                                                        0.01) *
-                                                                                                1.08
-                                                                                            ).toFixed(0),
-                                                                                        );
-                                                                                    } else if (values.sale > 100) {
-                                                                                        form.change(
-                                                                                            'total',
-                                                                                            (
-                                                                                                (valueTotalProduct +
-                                                                                                    findProduct(id).price *
-                                                                                                        values.product[index].number -
-                                                                                                    values.sale) *
-                                                                                                1.08
-                                                                                            ).toFixed(0),
-                                                                                        );
-                                                                                    } else if (values.sale === 0) {
-                                                                                        form.change(
-                                                                                            'total',
-                                                                                            (
-                                                                                                (valueTotalProduct +
-                                                                                                    findProduct(id).price *
-                                                                                                        values.product[index].number) *
-                                                                                                1.08
-                                                                                            ).toFixed(0),
+                                                                                            'due',
+                                                                                            findProduct(id).price *
+                                                                                                values.product[index].number -
+                                                                                                values.sale,
                                                                                         );
                                                                                     }
                                                                                 }
@@ -475,7 +498,6 @@ const EditOrder = (props) => {
                                                                                     form.change(`${name}.number`, 0);
                                                                                     form.change(`${name}.price`, 0);
                                                                                     form.change(`${name}.totalproduct`, 0);
-
                                                                                     form.change(
                                                                                         'total',
                                                                                         values.totalproduct - values.totalproduct,
@@ -509,9 +531,6 @@ const EditOrder = (props) => {
                                                                             // initialValue={count.number}
                                                                             validate={required}
                                                                             onChange={(e) => {
-                                                                                form.change('money', 0);
-                                                                                form.change('debit', 0);
-                                                                                form.change('due', 0);
                                                                                 form.change(
                                                                                     `${name}.totalproduct`,
                                                                                     e * values.product[index].price,
@@ -520,41 +539,17 @@ const EditOrder = (props) => {
                                                                                 if (values.product) {
                                                                                     valueTotalProduct = totalHanlder(values.product, index);
                                                                                 }
-                                                                                if (values.sale < 100) {
-                                                                                    const totalVoucher =
-                                                                                        e *
-                                                                                            values.product[index].price *
-                                                                                            0.01 *
-                                                                                            values.sale +
-                                                                                        values.sale * valueTotalProduct * 0.01;
-
+                                                                                if (values.sale) {
                                                                                     form.change(
                                                                                         'total',
-                                                                                        (
-                                                                                            (e * values.product[index].price +
-                                                                                                valueTotalProduct -
-                                                                                                totalVoucher) *
-                                                                                            1.08
-                                                                                        ).toFixed(0),
-                                                                                    );
-                                                                                } else if (e > 100) {
-                                                                                    form.change(
-                                                                                        'total',
-                                                                                        (
-                                                                                            (e * values.product[index].price +
-                                                                                                valueTotalProduct -
-                                                                                                values.sale) *
-                                                                                            1.08
-                                                                                        ).toFixed(0),
+                                                                                        e * values.product[index].price +
+                                                                                            valueTotalProduct -
+                                                                                            values.sale,
                                                                                     );
                                                                                 } else {
                                                                                     form.change(
                                                                                         'total',
-                                                                                        (
-                                                                                            (e * values.product[index].price +
-                                                                                                valueTotalProduct) *
-                                                                                            1.08
-                                                                                        ).toFixed(0),
+                                                                                        e * values.product[index].price + valueTotalProduct,
                                                                                     );
                                                                                 }
                                                                             }}
@@ -571,56 +566,50 @@ const EditOrder = (props) => {
                                                                         ></Field>
                                                                     </FormGroup>
                                                                 </FlexboxGrid.Item>
+                                                                <FlexboxGrid.Item className="minusproduct" colspan={2}>
+                                                                    {' '}
+                                                                    <Field
+                                                                        name={`${name}.minus`}
+                                                                        component={TextCustomField}
+                                                                        disabled
+                                                                    ></Field>
+                                                                    {/* remove product when click to minnus */}
+                                                                    {/* bug update listproduct */}
+                                                                    <i
+                                                                        onClick={() => {
+                                                                            console.log(index);
+                                                                            remove('product', index);
+                                                                        }}
+                                                                        class="fa-solid fa-minus"
+                                                                    ></i>{' '}
+                                                                </FlexboxGrid.Item>
                                                             </FlexboxGrid>
                                                         ))
                                                     }
                                                 </FieldArray>
                                             </div>
                                             <div className="addorder--voucher grid--handle">
-                                                <div>Voucher Giảm giá</div>
+                                                <div>Giảm giá</div>
                                                 <FormGroup>
                                                     <Field
                                                         defaultstyle
-                                                        inputvalue={arrayVoucher}
                                                         name="sale"
-                                                        placeholder="Voucher"
                                                         validate={function (e) {
                                                             if (e > values.total) {
                                                                 openNotifi('error', 'order', 'sale');
                                                                 return '.';
                                                             } else return undefined;
                                                         }}
-                                                        component={InputPickerCustomField}
-                                                        onSelect={(e) => {
-                                                            form.change('money', 0);
-                                                            form.change('debit', 0);
-                                                            form.change('due', 0);
-                                                            if (!e) {
-                                                                form.change('total', (totalHanlder(values.product) * 1.08).toFixed(0));
+                                                        component={NumberFormatField}
+                                                        onChange={(e) => {
+                                                            const i = parseInt(e.target.value.replace(/[^0-9]/g, ''));
+
+                                                            if (!i) {
+                                                                form.change('total', totalHanlder(values.product));
                                                             }
-                                                            if (e > 100) {
-                                                                form.change(
-                                                                    'total',
-                                                                    ((totalHanlder(values.product) - e) * 1.08).toFixed(0),
-                                                                );
-                                                                if (e > totalHanlder(values.product)) {
-                                                                } else {
-                                                                    if (values.money) {
-                                                                        if (values.money > values.total) {
-                                                                            form.change('due', values.money - values.total);
-                                                                        } else {
-                                                                            form.change('debit', values.total - values.money);
-                                                                        }
-                                                                    }
-                                                                }
-                                                            } else if (0 < e && e <= 100) {
-                                                                const totalVoucher = (e * totalHanlder(values.product)) / 100;
-                                                                console.log(totalVoucher);
-                                                                form.change(
-                                                                    'total',
-                                                                    ((totalHanlder(values.product) - totalVoucher) * 1.08).toFixed(0),
-                                                                );
-                                                                if (e > totalHanlder(values.product)) {
+                                                            if (i) {
+                                                                form.change('total', totalHanlder(values.product) - i);
+                                                                if (i > totalHanlder(values.product)) {
                                                                 } else {
                                                                     if (values.money) {
                                                                         if (values.money > values.total) {
@@ -631,18 +620,12 @@ const EditOrder = (props) => {
                                                                     }
                                                                 }
                                                             }
-                                                        }}
-                                                        onClean={() => {
-                                                            form.change('money', 0);
-                                                            form.change('debit', 0);
-                                                            form.change('due', 0);
-                                                            form.change('total', (totalHanlder(values.product) * 1.08).toFixed(0));
                                                         }}
                                                     ></Field>
                                                 </FormGroup>
                                             </div>
                                             <div className="addorder--total grid--handle">
-                                                <div className="wrapper--addorder--total">Tổng tiền đơn hàng (Đã bảo gồm 8% VAT)</div>
+                                                <div className="wrapper--addorder--total">Tổng tiền đơn hàng</div>
                                                 <FormGroup>
                                                     <Field name="total" component={NumberFormatField} disabled></Field>
                                                 </FormGroup>
@@ -709,17 +692,18 @@ const EditOrder = (props) => {
                                         </div>
 
                                         <ButtonToolbar className="buttons addcustomer--button--submit">
-                                            <Button appearance="primary" type="submit" disabled={submitting || pristine} color="blue">
-                                                Cập nhật
+                                            <Button appearance="primary" type="submit" disabled={submitting || pristine} color="green">
+                                                Tạo mới
                                             </Button>
                                             <Button
                                                 onClick={() => {
                                                     form.reset();
                                                     setStatusEdit(false);
+                                                    setIdRef('');
                                                     setDis([]);
                                                     setIdAvataCurrent('');
                                                 }}
-                                                color="yellow"
+                                                color="blue"
                                             >
                                                 Nhập lại
                                             </Button>
@@ -739,7 +723,7 @@ const EditOrder = (props) => {
         </>
     );
 };
-EditOrder.protoType = {
+AddOrder.protoType = {
     deleteCustomer: PropTypes.func.isRequired,
     onGetdata: PropTypes.func.isRequired,
     product: PropTypes.array.isRequired,
@@ -748,4 +732,4 @@ EditOrder.protoType = {
     prodvice: PropTypes.array.isRequired,
     user: PropTypes.string,
 };
-export default EditOrder;
+export default AddOrder;

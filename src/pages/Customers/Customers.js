@@ -4,7 +4,6 @@ import { FlexboxGrid, Pagination } from 'rsuite';
 import { getCustomer } from '../../ApiService/apiCustomer';
 import { getAllAdress } from '../../ApiService/provincesApi';
 
-
 import AddCustomer from '../../components/Customer/AddCustomer/AddCustomer';
 import FilterCustomer from '../../components/Customer/FilterCustomer/FilterCustomer';
 import CustomerTable from '../../components/Customer/CustomerTable/CustomerTable';
@@ -15,7 +14,6 @@ function Customers() {
     const [prodvice, setProvince] = useState([]);
     const [activePage, setActivePage] = useState(1);
 
-  
     // array current
     const dataCus = useRef();
     const [customer, setCustomer] = useState([]);
@@ -41,11 +39,11 @@ function Customers() {
         if (data.full_name || data.product || data.email || data.mobile) {
             //loc tren array current
             const newArr = dataCus.current.filter((item) => {
-        if(!item.idproduct) item.idproduct = '.'
-        if(!item.email) item.email = '.'
+                if (!item.idproduct) item.idproduct = '.';
+                if (!item.email) item.email = '.';
                 return (
-                    (!data.full_name ||  handleString(item.full_name).toLowerCase().includes(handleString(data.full_name).toLowerCase())) &&
-                    (!data.mobile ||   item.mobile.toLowerCase().includes(data.mobile.replace(/\s/g, '').toLowerCase())) &&
+                    (!data.full_name || handleString(item.full_name).toLowerCase().includes(handleString(data.full_name).toLowerCase())) &&
+                    (!data.mobile || item.mobile.toLowerCase().includes(data.mobile.replace(/\s/g, '').toLowerCase())) &&
                     (!data.product || item.idproduct.toLowerCase().includes(data.product.toLowerCase())) &&
                     (!data.email || item.email.toLowerCase().includes(data.email.toLowerCase()))
                 );
@@ -55,15 +53,14 @@ function Customers() {
             setCustomer(dataCus.current);
         }
     }
-   
 
     //-----ADD------
     function getdata(data) {
-//-------------------- handle async await when add customer------------------
-    // const itemLast =  customer.length - 1
-    // let id =  customer[itemLast].id +1
-    // if(!data.id) data ={...data,id:id}
- 
+        //-------------------- handle async await when add customer------------------
+        // const itemLast =  customer.length - 1
+        // let id =  customer[itemLast].id +1
+        // if(!data.id) data ={...data,id:id}
+
         if (data) return setCustomer([...customer, data]);
     }
 
@@ -135,7 +132,7 @@ function Customers() {
                                 </div>
                             </div>
                             <div className="wrapper--action--left">
-                                <AddCustomer prodvice={prodvice} customer ={customer} onGetdata={getdata} edit = {editCustomer}></AddCustomer>
+                                <AddCustomer prodvice={prodvice} customer={customer} onGetdata={getdata} edit={editCustomer}></AddCustomer>
                                 <div className="table--customer--filter">
                                     <FilterCustomer filter={filterCustomer}></FilterCustomer>
                                 </div>
@@ -216,5 +213,4 @@ function Customers() {
         </>
     );
 }
-
 export default Customers;

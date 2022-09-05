@@ -1,6 +1,13 @@
 import { numberWithCommas, totalHanlder } from '../../../Function/Function';
 const OrderInfo = (props) => {
     const { item } = props;
+    let voucherInfiny = 0;
+    if (item.sale > 100) {
+        voucherInfiny = item.sale;
+    } else if (item.sale <= 100 && item.sale > 0) {
+        voucherInfiny = item.sale * 0.01 * totalHanlder(item.product);
+    }
+
     return (
         <div className="info--order--table">
             <div className="infoorder--des--wrapper">
@@ -24,23 +31,31 @@ const OrderInfo = (props) => {
             </div>
             <div className="infoorder--middle">
                 <div>
-                    <span className="frontF blue">Tổng tiền trước giảm giá: </span>
+                    <span className="frontF blue">Tổng tiền sản phẩm: </span>
                     <span className="frontXs blue ">{numberWithCommas(totalHanlder(item.product))}đ</span>
                 </div>
                 <div>
                     <span className="frontF red">Giảm giá: </span>
-                    <span className="frontXs red">{numberWithCommas(item.sale)}đ</span>
+
+                    <span className="frontXs red">
+                        {item.sale < 100 ? `${item.sale}%` : ''} ({numberWithCommas(voucherInfiny)}đ){' '}
+                    </span>
                 </div>
                 <div>
                     <span className="frontF blue">Tổng tiền sau giảm: </span>
-                    <span className="frontXs blue">{numberWithCommas(item.total)}đ</span>
+
+                    <span className="frontXs blue">{numberWithCommas(totalHanlder(item.product) - voucherInfiny)}đ</span>
                 </div>
+                <div>
+                    <span className="frontF blue">Tổng hoá đơn(+ 8% VAT (nếu có)): </span>
+                    <span className="frontXs blue ">{numberWithCommas(item.total)}đ</span>
+                </div>
+            </div>
+            <div className="infoorder--middle">
                 <div>
                     <span className="frontF blue">Khách thanh toán: </span>
                     <span className="frontXs blue">{numberWithCommas(item.money)}đ</span>
                 </div>
-            </div>
-            <div className="infoorder--middle">
                 <div>
                     <span className="frontF blue">Trả lại khách: </span>
                     <span className="frontXs blue">{numberWithCommas(item.due)}đ</span>
@@ -48,10 +63,6 @@ const OrderInfo = (props) => {
                 <div>
                     <span className="frontF red">Nợ: </span>
                     <span className="frontXs red">{numberWithCommas(item.debit)}đ</span>
-                </div>
-                <div>
-                    <span className="frontF ">Ghi chú: </span>
-                    <span className="frontXs ">{item.note}</span>
                 </div>
                 <div>
                     <span className="frontF">Người tạo: </span>
@@ -71,7 +82,6 @@ const OrderInfo = (props) => {
                     <span className="frontF">Địa chỉ: </span>
                     <span className="frontXs">{item.address}</span>
                 </div>
-       
             </div>
         </div>
     );

@@ -6,21 +6,20 @@ import { handleDeleteOrder } from '../../../ApiService/ApiOrder';
 import { openNotifi } from '../../SupportUser/Notify';
 const DeleteMultiple = (props) => {
     const { item, deleteMultiple } = props;
+    
     const onSubmit = async () => {
         if (item) {
           await  item.forEach((id)=>{
                  handleDeleteOrder(id, openNotifi('success','order','delete'));
             })
-           
             await deleteMultiple();
         } else {
             openNotifi('warning','order', 'delete');
         }
     };
+
     const [open, setOpen] = useState(false);
-    const handleOpen = () => {
-        setOpen(true);
-    };
+    const handleOpen = () =>  setOpen(true);
     const handleClose = () => setOpen(false);
     return (
         <>
@@ -35,7 +34,7 @@ const DeleteMultiple = (props) => {
                             onSubmit={onSubmit}
                             render={({ handleSubmit }) => (
                                 <form onSubmit={handleSubmit} className="from--addcustomer">
-                                    Cảnh báo, bạn có chắc chắn muốn các xoá Hoá đơn này, sẽ không thể khôi phục ! "
+                                    Cảnh báo, bạn có chắc chắn muốn  xoá các Hoá đơn này, sẽ không thể khôi phục ! "
                                     <div className="grid--addcustomer--wrapper">
                                         <div className="buttons addcustomer--button--submit">
                                             <Button onClick={handleClose} appearance="primary" type="submit">
