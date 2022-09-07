@@ -28,34 +28,49 @@ Automatically pick the most recent 7 days
 
 
 # "Mô tả "
-" 
-Tự động điền các trường thông tin khi chọn khách  hàng.
 
-Tự động điền các các trường tổng  tiền(nếu có sẵn số lượng ) và trường giá sản phẩm khi chọn sản phẩm.
+# Login:
 
-Tự  động tạo mã đơn hàng.
+- Đăng nhập sử dụng API dummy(user: kminchelle. ;  password : 0lelplR)
+- Nếu chọn nhớ mật khẩu lần sau sẽ tự động đăng nhập, 
+- Nếu không chọn nhớ sau khi đóng tab sẽ phải đăng nhập lại.
+- Đăng xuất sẽ xoá thông tin lưu sẵn.
 
-Cho phép tạo mới khách hàng ,nếu khách không chọn được khách hàng ở thanh tìm kiếm.
+# Đơn hàng:
 
-Xử lý logic: Tính tổng bill, Ghi nợ,  Tiền thừa, tiền khách đưa. 
++ Sau khi select 1 sản phẩm sẽ fill luôn giá trị của trường đơn giá sản phẩm tương ứng với sản phẩm đó.
 
-Cho phép giảm giá (hiện tại bằng tiền, sẽ phát triển thêm %); giảm giá thông qua tổng hoá đơn. 
++ Sau khi select 1 khách hàng (user) thì các trường SDT , địa chỉ giao hàng sẽ tự fill.
 
-Validate các trường thông tin.
++ Trường đơn giá và thành tiền theo format 1,000,000 VND.
 
-Xoá đơn hàng, Lọc đơn hàng, sửa đơn hàng,Search, Xoá nhiều trường cùng lúc 
++ Tính toán và xử lý tổng tiền đơn hàng(VAT, VOUCHER).
 
-Validate các trường thông tin.
++ Tự động tạo mã đơn hàng.
 
-Lọc báo cáo theo ngày( tổng tiền đơn hàng, tổng nợ, tổng số đơn).
++ Trường SDT fai có ít nhất 10 số , không thể gõ chữ.
 
-Show chi tiết đơn hàng.
++ Các trường mã đơn hàng , tên KH , tên SP là bắt buộc điền.
 
-Tự động chọn 7 ngày gần nhất của danh sách đơn hàng.
-"
++ Bộ filter sẽ lọc theo tên KH , tên SP ; search input:  theo mã đơn hàng, tên khách hàng, SDT + Email.
+
++ CÓ THÔNG BÁO XỔ RA KHI THÊM MỚI THÀNH CÔNG HOẶC THẤT BẠI 
+
++ Thêm, sửa, xoá, lọc hoá đơn .
+
+# DashBroard
++ Tại bảng top KH, sẽ hiển thị top 10 KH có giá trị đóng góp cao nhất , sắp xếp giảm dần
++ Tại bảng Top SP , list 10 sp có số lần bán nhiều nhất , sắp xếp giảm dần.
++ Khi thêm sửa xoá đơn hàng, bảng DASHBROAD sẽ cập nhật theo.
+
+# Bonus 
++  Xử lý logic: Ghi nợ,  Tiền thừa, tiền khách đưa. 
++  Lọc báo cáo hoá đơn theo Khoảng thời gian( tổng tiền đơn hàng, tổng nợ, tổng số đơn).
++  Cho phép xoá nhiều đơn hàng cùng lúc.
++  DashBroard :  Biểu đồ(Chart Doanh thu) Update theo thời gian thực và Order 6 đơn hàng gần nhất.
+
 
 #Pre setup
-
 You need to install JSON SEVER on your computer in oder to run the database:
 - `npm install -g json-server`
 
