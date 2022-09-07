@@ -7,7 +7,7 @@ import OrderInfo from './OrderInfo/OrderInfo';
 import { numberWithCommas } from '../../Function/Function';
 import EditOrder from '../EditOrder/EditOrder';
 function Order(props) {
-    const { forcus: handleFocus, item: i, deleteOrder, getSelect, popSelect, customer } = props;
+    const { forcus: handleFocus, item: i, deleteOrder, getSelect, popSelect, customer, user } = props;
     const [showInfo, setShowInfo] = useState(false);
     // SELECT
     const handleSelect = (value, checked) => {
@@ -35,18 +35,18 @@ function Order(props) {
                         {i.status}
                     </FlexboxGrid.Item>
                     <FlexboxGrid.Item classPrefix="action--customer" colspan={3}>
-                        {customer && (
-                            <EditOrder {...props} item={i}>
+                        {customer && user && (
+                            <EditOrder user={user} {...props} item={i}>
                                 {' '}
                             </EditOrder>
                         )}
-                        <DeleteOrder {...props} deleteOrder={deleteOrder} item={i} />
+                        {user && <DeleteOrder user={user} {...props} deleteOrder={deleteOrder} item={i} />}
                         {showInfo ? (
-                            <i class="fa-solid fa-chevron-up" onClick={() => setShowInfo(false)}>
+                            <i className="fa-solid fa-chevron-up" onClick={() => setShowInfo(false)}>
                                 {' '}
                             </i>
                         ) : (
-                            <i class="fa-solid fa-chevron-down" onClick={() => setShowInfo(true)}></i>
+                            <i className="fa-solid fa-chevron-down" onClick={() => setShowInfo(true)}></i>
                         )}
                     </FlexboxGrid.Item>
                 </FlexboxGrid>
@@ -59,5 +59,6 @@ Order.protoType = {
     deleteOrder: PropTypes.func.isRequired,
     handleFocus: PropTypes.func.isRequired,
     i: PropTypes.object.isRequired,
+    user: PropTypes.string.isRequired,
 };
 export default Order;

@@ -4,7 +4,7 @@ import { FlexboxGrid } from 'rsuite';
 import ProductInfoAddOrder from '../ProductInfoAddOrder';
 
 function ProductTableAddorder(props) {
-    const {product,number} =props
+    const { product, number } = props;
 
     const [wordEntered, setWordEntered] = useState('');
     const [productList, setProductList] = useState(product);
@@ -15,9 +15,7 @@ function ProductTableAddorder(props) {
         setWordEntered(searchWord);
         const newFilter = product.filter((item) => {
             return (
-                handleString(item.name).toLowerCase().includes(handleString(searchWord).toLowerCase()) ||
-                item.id === parseFloat(searchWord) 
-
+                handleString(item.name).toLowerCase().includes(handleString(searchWord).toLowerCase()) || item.id === parseFloat(searchWord)
             );
         });
 
@@ -28,15 +26,14 @@ function ProductTableAddorder(props) {
         }
     };
 
-    
-    let pro = productList.map((e)=>{
-        let num = number.find(element=> element.id === e.id)
-        if(num) {
-          e.salenumber = num.number;
+    let pro = productList.map((e) => {
+        let num = number.find((element) => element.id === e.id);
+        if (num) {
+            e.salenumber = num.number;
         }
         return e;
-      })
-  
+    });
+
     return (
         <div className="addorder--wrapper--listproduct">
             <div className="info--customer--addorder">
@@ -51,17 +48,14 @@ function ProductTableAddorder(props) {
             </div>
             <FlexboxGrid className="show-grid--listproduct" fluid>
                 {pro.map((item) => {
-               
-                          return (
-                              <FlexboxGrid.Item colspan={6}>
-                                  {' '}
-                                  <ProductInfoAddOrder item={item} />{' '}
-                              </FlexboxGrid.Item>
-                          );
-                      })
-}
+                    return (
+                        <FlexboxGrid.Item colspan={6}>
+                            {' '}
+                            <ProductInfoAddOrder item={item} />{' '}
+                        </FlexboxGrid.Item>
+                    );
+                })}
             </FlexboxGrid>
-          
         </div>
     );
 }

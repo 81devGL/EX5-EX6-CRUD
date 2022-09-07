@@ -5,33 +5,30 @@ import { Form as FromRsuite, FormGroup } from 'rsuite';
 import PropTypes from 'prop-types';
 
 import InputPickerCustomField from '../../FinalFormComponent/InputPickerCustomField';
-import TextCustomField from '../../FinalFormComponent/TextCustomField';
-import { normalizePhone } from '../../Function/Function';
-
 function FilterOrder(props) {
-    const { filter, product,orders } = props;
+    const { filter, product, customer } = props;
     const [open, setOpen] = useState(false);
-    const [filterData, setDataFilter] = useState({ name: '', mobile: '', product: '', email: '' });
+    const [filterData, setDataFilter] = useState({ name: '', product: '' });
 
     const handleOpen = () => setOpen(true);
     const onSubmit = async (values) => {
         if (values.mobile) {
             values.mobile = values.mobile.replace(/\s/g, '');
         }
-        setDataFilter({ name: values.full_name, mobile: values.mobile, product: values.product, email: values.email });
+        setDataFilter({ name: values.full_name, product: values.product });
         filter(values);
         setOpen(false);
     };
 
     const data = product.map((item) => ({ label: item.name, value: item.name }));
-    const customer = orders.map((item)=> ({ label: item.full_name, value: item.full_name }) )
+    const dataCustomer = customer.map((item) => ({ label: item.full_name, value: item.full_name }));
 
     return (
         <>
             <Button onClick={() => handleOpen('top')}>Bộ lọc</Button>
             <Drawer overflow={false} placement="right" size={'xs'} show={open} onHide={() => setOpen(false)}>
                 <Drawer.Header>
-                    <Drawer.Title>Tìm kiếm khách hàng</Drawer.Title>
+                    <Drawer.Title>Tìm kiếm đơn hàng</Drawer.Title>
                 </Drawer.Header>
                 <Drawer.Body overflow={false}>
                     <Placeholder.Graph className="body--filterorder" height="600px" overflow={false}>
@@ -39,8 +36,6 @@ function FilterOrder(props) {
                             onSubmit={onSubmit}
                             initialValues={{
                                 full_name: filterData.name,
-                                idorder: filterData.idorder,
-                                mobile: filterData.mobile,
                                 product: filterData.product,
                             }}
                             render={({ handleSubmit, form }) => (
@@ -48,24 +43,12 @@ function FilterOrder(props) {
                                     <div className="grid--orderfil--wrapper">
                                         <div className="input--wrapper--filterorder">
                                             <FormGroup>
-                                                <Field name="idorder" component={TextCustomField} placeholder="Mã đơn hàng " type="text" />
-                                            </FormGroup>
-                                            <FormGroup>
                                                 <Field
                                                     name="full_name"
                                                     component={InputPickerCustomField}
                                                     type="text"
                                                     placeholder="Họ và Tên"
-                                                    inputvalue={customer}
-                                                />
-                                            </FormGroup>
-                                            <FormGroup>
-                                                <Field
-                                                    name="mobile"
-                                                    component={TextCustomField}
-                                                    type="text"
-                                                    placeholder="Số điện thoại"
-                                                    parse={normalizePhone}
+                                                    inputvalue={dataCustomer}
                                                 />
                                             </FormGroup>
 
@@ -75,7 +58,7 @@ function FilterOrder(props) {
                                                     component={InputPickerCustomField}
                                                     className="addcustomer--input--name"
                                                     name="product"
-                                                    placeholder ="Chọn sản phẩm"
+                                                    placeholder="Chọn sản phẩm"
                                                     inputvalue={data}
                                                 ></Field>
                                             </FormGroup>
@@ -88,7 +71,7 @@ function FilterOrder(props) {
                                                 className="button--filter--Customer"
                                                 color="blue"
                                                 onClick={(values) => {
-                                                    setDataFilter({ ...filterData, name: '', mobile: '', product: '', email: '' });
+                                                    setDataFilter({ ...filterData, name: '', product: '' });
                                                     form.reset();
                                                     filter(values);
                                                 }}
@@ -120,6 +103,5 @@ FilterOrder.protoType = {
     product: PropTypes.array.isRequired,
     orders: PropTypes.array.isRequired,
     filter: PropTypes.func.isRequired,
-
 };
 export default FilterOrder;

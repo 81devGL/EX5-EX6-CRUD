@@ -4,17 +4,18 @@ import { Form } from 'react-final-form';
 import PropTypes from 'prop-types';
 import { handleDeleteOrder } from '../../../ApiService/ApiOrder';
 import { openNotifi } from '../../SupportUser/Notify';
-const DeleteCustomer = (props) => {
-    const { item, deleteOrder } = props;
+const DeleleteOrder = (props) => {
+    const { item, deleteOrder, user } = props;
+    const [open, setOpen] = useState(false);
     const onSubmit = async () => {
         if (item.id) {
-            await handleDeleteOrder(item.id, openNotifi('success', 'order', 'delete'));
+            await handleDeleteOrder(item.id, openNotifi('success', 'order', 'delete', user, item.id));
             await deleteOrder(item.id);
         } else {
-            openNotifi('warning', 'order', 'delete');
+            openNotifi('warning', 'order', 'delete', user, item.id);
         }
     };
-    const [open, setOpen] = useState(false);
+
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
@@ -53,8 +54,8 @@ const DeleteCustomer = (props) => {
         </>
     );
 };
-DeleteCustomer.protoType = {
+DeleleteOrder.protoType = {
     item: PropTypes.object.isRequired,
     deleteOrder: PropTypes.func.isRequired,
 };
-export default DeleteCustomer;
+export default DeleleteOrder;

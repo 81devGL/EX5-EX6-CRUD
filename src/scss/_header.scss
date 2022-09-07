@@ -3,7 +3,7 @@
     align-items: center;
     padding: 0px 20px;
     width: 100%;
-    max-width: 1600px;
+    // max-width: 1600px;
     height: 69px;
     align-self: stretch;
     box-sizing: border-box;
@@ -58,7 +58,6 @@
     cursor: pointer;
     width: 32px;
     height: 32px;
-
     background: $white;
     border-radius: 16px;
 }
@@ -71,23 +70,30 @@
     height: 32px;
     border-radius: 16px;
 }
+
 .header--img--content {
     width: 100%;
     height: 100%;
     cursor: pointer;
 }
+
 .header--title--side {
     display: none;
 }
-.bell--header{
- width: 32px;
+
+.bell--header {
+    width: 32px;
+    padding: 8px;
+
 }
+
 //responsive the web
 @media only screen and (max-width: 1024px) {
     .header--title--side {
         display: none;
     }
 }
+
 @media only screen and (max-width: 786px) {
     .header--title--side {
         display: none;
@@ -98,22 +104,80 @@
     .header--title--side {
         display: block;
     }
+
     .header--title {
         display: none;
     }
 }
-.user{
+
+.user {
     margin-right: 32px;
     color: $gray500;
 }
-.showlogout{
-@include fontS;
-@include flexBetween;
-position: absolute;
-bottom: -20px;
-right: -62px;
-width: 88px;
+
+.showlogout {
+    @include fontS;
+    @include flexBetween;
+    position: absolute;
+    bottom: -20px;
+    right: -62px;
+    width: 88px;
 
 
 
+}
+
+.timeline {
+
+    max-height: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow-y: auto;
+    width: 100%;
+    padding-left: 8px;
+    padding-right: 8px;
+
+
+}
+
+.affter--timeline {
+    background-color: $green50;
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    transform: rotate(45deg);
+    top: -6px;
+    right: 10%;
+    border-radius: 3px;
+
+
+}
+
+.wrapper--icon--timeline {
+    display: flex;
+    justify-content: space-between;
+    margin: 8px;
+
+}
+
+.wrapper--timeline {
+    position: absolute;
+    z-index: 1000;
+    background-color: $green50;
+    box-shadow: $boxshadowcolor;
+    border-radius: 8px;
+    width: 300px;
+    top: 36px;
+    right: -36px;
+    max-height: 550px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+}
+
+.title--timeline {
+    margin: 8px;
+    border-bottom: $separator-default;
 }

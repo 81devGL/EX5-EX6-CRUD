@@ -14,7 +14,6 @@ import UploadAvataFrom from './UploadForm/UploadAvataFrom';
 
 const AddCustomer = (props) => {
     const { customer, prodvice, onGetdata, edit } = props;
-    console.log(props);
     const [open, setOpen] = useState(false);
     const [dis, setDis] = useState([]);
     const [idEdit, setIdEdit] = useState('');

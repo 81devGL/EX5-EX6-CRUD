@@ -127,7 +127,7 @@ function Customers() {
                                     value={wordEntered}
                                 />
                                 <div>
-                                    {!wordEntered.length === 0 && <i onClick={clearInput} class="fa-solid fa-x"></i>}
+                                    {!wordEntered.length === 0 && <i onClick={clearInput} className="fa-solid fa-x"></i>}
                                     <i className="fa-solid fa-magnifying-glass search--icon"></i>
                                 </div>
                             </div>

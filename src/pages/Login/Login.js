@@ -16,7 +16,6 @@ function Login(props) {
 
     const onSubmit = async (values) => {
         const { username, password } = values;
-
         const data = await fetch('https://dummyjson.com/auth/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -25,6 +24,7 @@ function Login(props) {
                 password,
             }),
         }).then((res) => res.json());
+        //remember password and no remember
         if (!isSave) {
             sessionStorage.setItem('token', data.token);
             sessionStorage.setItem('firstName', data.firstName);

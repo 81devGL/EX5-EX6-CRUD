@@ -1,7 +1,7 @@
-import { Modal, Button, Placeholder, InputPicker,Notification } from 'rsuite';
+import { Modal, Button, Placeholder, InputPicker, Notification } from 'rsuite';
 import { useState } from 'react';
 import { Form, Field } from 'react-final-form';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 
 import { EditCustomerApi } from '../../../ApiService/apiCustomer';
 import { normalizePhone } from '../../Function/Function';
@@ -26,6 +26,7 @@ const EditCustomer = (props) => {
         }
 
         let newValue = {
+            ...i,
             city: values.city,
             distrist: values.distrist,
             idproduct: 'Iphone X',
@@ -35,18 +36,17 @@ const EditCustomer = (props) => {
             gen: i.gen,
             email: values.email,
             avata: i.avata,
-            id:i.id
+            id: i.id,
         };
 
-        if(i.id){
-            await EditCustomerApi(newValue, i.id,editStatus('success'),);
+        if (i.id) {
+            await EditCustomerApi(newValue, i.id, editStatus('success'));
             await edit(newValue, i.id);
             setOpen(false);
-        }else{
-            editStatus("warning")
+        } else {
+            editStatus('warning');
             setOpen(false);
         }
-        
     };
 
     function handleCity(city) {
@@ -59,12 +59,12 @@ const EditCustomer = (props) => {
         if (funcName === 'success') {
             Notification[funcName]({
                 title: 'Sửa khách hàng thành công !',
-                duration: 2000
+                duration: 2000,
             });
         } else {
             Notification[funcName]({
                 title: 'Có lỗi, vui lòng Refesh trang và thử lại !!',
-                duration: 4000
+                duration: 4000,
             });
         }
     }
@@ -73,10 +73,12 @@ const EditCustomer = (props) => {
             <i className="fa-solid fa-pen-to-square editcustomer--buton" onClick={() => handleOpen()}></i>
             <Modal onHide={handleClose} overflow={false} size={'lg'} show={open}>
                 <Modal.Header>
-                    <Modal.Title>Cập nhật khách hàng "{i.full_name} - {i.id}"</Modal.Title>
+                    <Modal.Title>
+                        Cập nhật khách hàng "{i.full_name} - {i.id}"
+                    </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Placeholder.Graph height="300px" classPrefix="popup--addcustomer"> 
+                    <Placeholder.Graph height="300px" classPrefix="popup--addcustomer">
                         <Form
                             validate={(values) => {
                                 //validate email + mobile using regex
@@ -120,9 +122,7 @@ const EditCustomer = (props) => {
                                                             type="text"
                                                             placeholder="Họ và tên *"
                                                         />
-                                                        {meta.error && meta.touched && (
-                                                            <span className="warning">{meta.error}</span>
-                                                        )}
+                                                        {meta.error && meta.touched && <span className="warning">{meta.error}</span>}
                                                     </div>
                                                 )}
                                             </Field>
@@ -137,9 +137,7 @@ const EditCustomer = (props) => {
                                                             type="text"
                                                             placeholder="___ ___ ____"
                                                         />
-                                                        {meta.error && meta.touched && (
-                                                            <span className="warning">{meta.error}</span>
-                                                        )}
+                                                        {meta.error && meta.touched && <span className="warning">{meta.error}</span>}
                                                     </div>
                                                 )}
                                             </Field>
@@ -179,13 +177,7 @@ const EditCustomer = (props) => {
                                             </Field>
                                         </div>
                                         <div className="grid--addcustomer--item">
-                                            <Field
-                                                className="addcustomer--input--name"
-                                                name="dob"
-                                                component="input"
-                                                type='date'
-                                          
-                                            />
+                                            <Field className="addcustomer--input--name" name="dob" component="input" type="date" />
                                             <span className="addcustomer--name--after">Ngày sinh</span>
                                         </div>
                                         <div className="grid--addcustomer--item">
@@ -198,21 +190,14 @@ const EditCustomer = (props) => {
                                                             type="text"
                                                             placeholder="email@example.vn"
                                                         />
-                                                        {meta.error && meta.touched && (
-                                                            <span className="warning">{meta.error}</span>
-                                                        )}
+                                                        {meta.error && meta.touched && <span className="warning">{meta.error}</span>}
                                                     </div>
                                                 )}
                                             </Field>
                                             <span className="addcustomer--name--after">Email</span>
                                         </div>
                                         <div className="buttons addcustomer--button--submit">
-                                            <Button
-                                                appearance="primary"
-                                                type="submit"
-                                                disabled={submitting || pristine}
-                                                color="blue"
-                                            >
+                                            <Button appearance="primary" type="submit" disabled={submitting || pristine} color="blue">
                                                 Cập nhật
                                             </Button>
                                         </div>
@@ -234,6 +219,6 @@ const EditCustomer = (props) => {
 EditCustomer.protoType = {
     i: PropTypes.object.isRequired,
     edit: PropTypes.func.isRequired,
-    pro: PropTypes.array.isRequired
-}
+    pro: PropTypes.array.isRequired,
+};
 export default EditCustomer;

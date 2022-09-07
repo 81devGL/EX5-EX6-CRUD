@@ -27,6 +27,7 @@ function Orders() {
     const dataOrder = useRef();
     const [orders, setOrders] = useState([]);
     const [prodvice, setProvince] = useState();
+    const [user, setUser] = useState('');
 
     function deleteOrder(id) {
         const newOrder = orders.filter((item) => {
@@ -52,11 +53,10 @@ function Orders() {
         });
         setOrders(newArr);
     }
-
+    //====filter====
     function filterOrder(data) {
-        if (data.full_name || data.product || data.idorder || data.mobile) {
+        if (data.full_name || data.product) {
             let name = handleString(data.full_name);
-            let mobile = handleString(data.mobile);
             let product = handleString(data.product);
 
             //loc tren array current
@@ -66,14 +66,8 @@ function Orders() {
                 }, '');
                 let nameItem = handleString(item.full_name);
                 let productItem = handleString(productList);
-                let mobileItem = handleString(item.mobile);
 
-                return (
-                    (!name || nameItem === name) &&
-                    (!mobile || mobileItem === mobile) &&
-                    productItem.toLowerCase().includes(product.toLowerCase()) &&
-                    (!data.idorder || item.idorder.toString() === data.idorder.toString())
-                );
+                return (!name || nameItem === name) && (!product || productItem.toLowerCase().includes(product.toLowerCase()));
             });
             setOrders(newArr);
         } else {
@@ -95,6 +89,7 @@ function Orders() {
     useEffect(() => {
         const fetchApi = async () => {
             try {
+                // get today and last 7 days
                 const orderItem = await getOrders();
                 let date = await new Date();
                 let last = await new Date(date.getTime() - 7 * 24 * 60 * 60 * 1000);
@@ -121,10 +116,19 @@ function Orders() {
                 dataOrder.current = orderItem;
                 const prodvice = await getAllAdress();
                 setProvince(prodvice);
+
                 const dataCustomer = await getCustomer();
                 setCustomer(dataCustomer);
+
                 const products = await getProducts();
                 setProduct(products);
+
+                const userLocal = localStorage.getItem('lastName') + localStorage.getItem('firstName');
+                const userSession = sessionStorage.getItem('lastName') + sessionStorage.getItem('firstName');
+
+                if (userLocal) {
+                    setUser(userLocal);
+                } else setUser(userSession);
             } catch (error) {
                 console.log(error);
             }
@@ -136,18 +140,9 @@ function Orders() {
     const handleFilter = (event) => {
         const searchWord = event.target.value;
         setWordEntered(searchWord);
-
-        const newFilter = orders.filter((item) => {
-            const productList = item.product.reduce((list, item) => {
-                return (list += item.name);
-            }, '');
+        const newFilter = dataOrder.current.filter((item) => {
             const idorderNew = item.idorder.toString();
-            return (
-                handleString(item.full_name).toLowerCase().includes(handleString(searchWord).toLowerCase()) ||
-                item.mobile.toLowerCase().includes(searchWord.toLowerCase()) ||
-                idorderNew.toLowerCase().includes(searchWord.toLowerCase()) ||
-                productList.toLowerCase().includes(searchWord.toLowerCase())
-            );
+            return idorderNew.toLowerCase().includes(searchWord.toLowerCase());
         });
 
         if (searchWord === '') {
@@ -191,27 +186,13 @@ function Orders() {
         setSelectItem(newSelect);
     };
 
-    // const handleCheckAll = (e, checked) => {
-
-    //     if (checked) {
-    //         const array = data.map((item)=> {return item.id})
-    //         setSelectItem(array);
-    //         setIsDelete(true);
-    //         setCheckall(true);
-    //     } else {
-    //         setSelectItem([]);
-    //         setIsDelete(false);
-    //         setCheckall(false);
-    //     }
-    // };
-
     return (
         <>
             <div className={cx('wrapper--dasboard')} id="wrapper--dasboard">
                 <div className={cx('wrapper--customer')}>
                     <div className={cx('table--customer--header')}>
                         <div className={cx('wrapper--order--info')}>
-                            <span className={cx('table--customer--title')}>Danh sách khách hàng </span>
+                            <span className={cx('table--customer--title')}>Danh sách đơn hàng </span>
                             <HeaderOrderInfo rootOrder={dataOrder.current} renderReport={renderReport} orders={orders}></HeaderOrderInfo>
                         </div>
 
@@ -219,7 +200,7 @@ function Orders() {
                             <div className={cx('customer--search--wrapper')}>
                                 <input
                                     className={cx('customer--search--input')}
-                                    placeholder="Tìm kiếm... "
+                                    placeholder="Tìm kiếm mã đơn hàng... "
                                     onChange={handleFilter}
                                     value={wordEntered}
                                 />
@@ -231,7 +212,13 @@ function Orders() {
 
                             <div className={cx('wrapper--action--left')}>
                                 {isDelete && (
-                                    <DeleteMultiple item={selectItem} deleteMultiple={deleteMultiple} appearance="primary" color="red">
+                                    <DeleteMultiple
+                                        user={user}
+                                        item={selectItem}
+                                        deleteMultiple={deleteMultiple}
+                                        appearance="primary"
+                                        color="red"
+                                    >
                                         Xoá{' '}
                                     </DeleteMultiple>
                                 )}
@@ -242,11 +229,12 @@ function Orders() {
                                         prodvice={prodvice}
                                         onGetdata={getdata}
                                         customer={customer}
+                                        user={user}
                                     ></AddOrder>
                                 )}
 
                                 <div className={cx('table--customer--filter')}>
-                                    <FilterOrder product={product} orders={orders} filter={filterOrder}></FilterOrder>
+                                    <FilterOrder product={product} orders={orders} customer={customer} filter={filterOrder}></FilterOrder>
                                 </div>
                             </div>
                         </div>
@@ -295,6 +283,7 @@ function Orders() {
                                     orders={orders}
                                     getSelect={getSelect}
                                     popSelect={popSelect}
+                                    user={user}
                                 />
                             );
                         })}

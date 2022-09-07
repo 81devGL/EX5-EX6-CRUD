@@ -6,7 +6,7 @@ import { numberWithCommas } from '../Function/Function';
 import { Icon } from 'rsuite';
 
 const ProductInfoAddOrder = (props) => {
-    const { item,getNumber } = props;
+    const { item, getNumber } = props;
     let numberProduct = 0;
     const cld = new Cloudinary({
         cloud: {
@@ -20,8 +20,8 @@ const ProductInfoAddOrder = (props) => {
     myImage.resize(fill().width(80).height(80));
     const handleListProduct = () => {
         numberProduct = numberProduct + 1;
-        const data ={number: numberProduct,id:item.id}
-        getNumber(data)
+        const data = { number: numberProduct, id: item.id };
+        getNumber(data);
     };
 
     return (

@@ -1,11 +1,11 @@
 import { Chartjs } from '../../components/Dashboard/Chartjs/Chartjs';
-import NewCustomer from '../../components/Dashboard/NewCustomer/NewCustomer';
 import NewOrder from '../../components/Dashboard/NewOrder/NewOrder';
-import NewProduct from '../../components/Dashboard/NewProduct/NewProduct';
 import { useEffect, useState } from 'react';
 import { getCustomer } from '../../ApiService/apiCustomer';
 import { getOrders } from '../../ApiService/ApiOrder';
 import { getProducts } from '../../ApiService/apiProduct';
+import TopCustomer from '../../components/Dashboard/TopCustomer/TopCustomer';
+import BestSaleProduct from '../../components/Dashboard/BestSaleProduct/BestSaleProduct';
 
 function Dashbroad() {
     const [customer, setCustomer] = useState([]);
@@ -40,11 +40,11 @@ function Dashbroad() {
             <div className="wrapper--table1--table2">
                 <div className="table1">
                     <div className="table1--title">Khách hàng thân thiết</div>
-                    {customer && orders && <NewCustomer orders={orders} customer={customer} />}
+                    {customer && orders && <TopCustomer orders={orders} customer={customer} />}
                 </div>
                 <div className="table2">
                     <div className="table2--title">Sản phẩm bán chạy </div>
-                    {product && orders && <NewProduct product={product} orders={orders} />}
+                    {product && orders && <BestSaleProduct product={product} orders={orders} />}
                 </div>
             </div>
             <div className="table3">
@@ -58,7 +58,7 @@ function Dashbroad() {
                     <span className="table3--des--title total">THÀNH TIỀN</span>
                     <span className="table3--des--title status">TRẠNG THÁI</span>
                 </div>
-                <NewOrder />
+                <NewOrder orders={orders} />
             </div>
             <div className="wrapper--footer">
                 <div className="footer">

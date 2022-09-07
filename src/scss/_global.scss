@@ -60,32 +60,38 @@ $default-margin-bottom-moblie: 16px;
     font-weight: 600;
     line-height: 30px;
 }
+
 @mixin fontS {
     font-size: 12px;
     font-weight: 400;
 }
+
 @mixin flexCenter {
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
 @mixin flexBetween {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
+
 @mixin flexCenterColum {
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
 }
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: $fontfamily;
 }
+
 .green--status {
     color: $green800;
     background-color: $green100;
@@ -95,6 +101,7 @@ $default-margin-bottom-moblie: 16px;
     line-height: 22px;
     text-align: center;
 }
+
 .red--status {
     color: $red800;
     background-color: $red100;
@@ -104,84 +111,107 @@ $default-margin-bottom-moblie: 16px;
     line-height: 22px;
     text-align: center;
 }
+
 .blue--status {
     color: $blue800;
     background-color: $blue100;
-   
+
 }
+
 .gray--status {
     color: $gray800;
     background-color: $gray100;
 }
-.flexCenter{
+
+.flexCenter {
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
 a {
     text-decoration: none;
-    &:hover{
+
+    &:hover {
         text-decoration: none;
     }
 }
+
 .active {
-    color: $blue500 !important;
+    color: $blue500  !important;
 }
-.frontBold{
+
+.frontBold {
     font-size: 14px;
     font-weight: 600;
     line-height: 21px;
     color: $gray900;
 }
-.frontF{
+
+.frontF {
     font-size: 12px;
     font-weight: 600;
     line-height: 21px;
     color: $gray600;
 }
-.frontS{
+
+.frontS {
     font-weight: 400;
     line-height: 21px;
     color: $gray600;
     font-size: 14px;
 }
-.frontXs{
+
+.frontXs {
     font-weight: 400;
     line-height: 18px;
     color: $gray500;
     font-size: 12px;
 }
+
 .flexBetween {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-.red{
+
+.red {
     color: $red500;
 }
-.green{
+
+.green {
     color: $green500;
 }
-.blue{
+
+.blue {
     color: $blue500;
 }
-.displayNone{
+
+.displayNone {
     display: none !important;
-    position:absolute !important;
+    position: absolute !important;
 }
-.left{
+
+.left {
     text-align: left;
 }
+
 //responsive the web
 @media only screen and (max-width: 576px) {
     .main {
         min-width: 360px;
     }
 }
-.rs-table-body-wheel-area{
+
+.rs-table-body-wheel-area {
     overflow: hidden !important;
     font-weight: 600;
 }
-.rs-table-pagination-length-menu{
+
+.rs-table-pagination-length-menu {
     display: none !important
+}
+
+.pointer {
+    cursor: pointer;
 }

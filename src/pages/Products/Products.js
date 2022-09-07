@@ -83,27 +83,16 @@ function Products() {
                                     <span className="product--item--content">{item.number} cái</span>
                                     <span className="product--item--content">{total} VND</span>
                                     <div className="product--item--content ">
-                                        <span className={`product--item--status ${colorStatusProduct}`}>
-                                            {' '}
-                                            {statusProduct}
-                                        </span>
+                                        <span className={`product--item--status ${colorStatusProduct}`}> {statusProduct}</span>
                                     </div>
                                     <div className="product--item--content">
                                         <div className="container--icon--product">
-                                            <div
-                                                onclick={showPopupEdit}
-                                                className="product--icon"
-                                                id="edit__product__icon"
-                                            >
+                                            <div onClick={showPopupEdit} className="product--icon" id="edit__product__icon">
                                                 {' '}
                                                 <i className={`fa-solid fa-pen`}></i>
                                             </div>
-                                            <div
-                                                onclick={showPopupDelete}
-                                                className="product--icon"
-                                                id="delete__product__icon"
-                                            >
-                                                <i class="fa-solid fa-trash-arrow-up"></i>
+                                            <div onClick={showPopupDelete} className="product--icon" id="delete__product__icon">
+                                                <i className="fa-solid fa-trash-arrow-up"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -114,10 +103,8 @@ function Products() {
                     <div className="wrapper--paging">
                         <span className="paging--text">Số bản ghi</span>
                         <div className="paging--short">
-                            <select  aria-label="State" className="paging--short--number">
-                                <option defaultValue={'10'} >
-                                    10
-                                </option>
+                            <select aria-label="State" className="paging--short--number">
+                                <option defaultValue={'10'}>10</option>
                                 <option value="15">15</option>
                                 <option value="20">20</option>
                             </select>
@@ -126,8 +113,8 @@ function Products() {
                             1-10 of 20
                         </div>
                         <div className="paging--action">
-                            <i class="fa-solid fa-chevron-left paging--action--icon product--prePage"></i>
-                            <i class="fa-solid fa-chevron-right paging--action--icon product--nextPage"></i>
+                            <i className="fa-solid fa-chevron-left paging--action--icon product--prePage"></i>
+                            <i className="fa-solid fa-chevron-right paging--action--icon product--nextPage"></i>
                         </div>
                     </div>
                 </div>

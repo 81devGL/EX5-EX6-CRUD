@@ -1,9 +1,11 @@
 import { Notification } from 'rsuite';
+import { addTimeline, now } from '../../ApiService/Apiservice';
 
-function openNotifi(funcName, element, action) {
+async function openNotifi(funcName, element, action, user, idorder) {
     if (element === 'order') {
         if (action === 'add') {
             if (funcName === 'success') {
+                await addTimeline({ des: `${user} đã tạo đơn hàng ${idorder}`, time: now });
                 Notification[funcName]({
                     title: 'Tạo đơn hàng thành công !',
                     duration: 2000,
@@ -21,6 +23,7 @@ function openNotifi(funcName, element, action) {
             }
         } else if (action === 'delete') {
             if (funcName === 'success') {
+                await addTimeline({ des: `${user} đã xoá đơn hàng ${idorder}`, time: now });
                 Notification[funcName]({
                     title: 'Xoá đơn hàng thành công !',
                     duration: 2000,
@@ -33,6 +36,7 @@ function openNotifi(funcName, element, action) {
             }
         } else if (action === 'edit') {
             if (funcName === 'success') {
+                await addTimeline({ des: `${user} đã sửa đơn hàng ${idorder}`, time: now });
                 Notification[funcName]({
                     title: 'Sửa đơn hàng thành công !',
                     duration: 2000,
@@ -62,6 +66,7 @@ function openNotifi(funcName, element, action) {
     } else if (element === 'customer') {
         if (action === 'add') {
             if (funcName === 'success') {
+                await addTimeline({ des: `${user} đã thêm 1 khách hàng `, time: now });
                 Notification[funcName]({
                     title: 'Tạo khách hàng thành công !',
                     duration: 2000,
@@ -75,6 +80,7 @@ function openNotifi(funcName, element, action) {
         }
         if (action === 'delete') {
             if (funcName === 'success') {
+                await addTimeline({ des: `${user} đã xoá 1 khách hàng `, time: now });
                 Notification[funcName]({
                     title: 'Xoá khách hàng thành công !',
                     duration: 2000,

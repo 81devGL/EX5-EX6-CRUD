@@ -13,15 +13,18 @@
     padding: 16px;
     position: relative;
 }
+
 .table--product {
     width: 100%;
     min-height: 591px;
     margin-bottom: 32px;
 }
+
 .table--product--header {
     width: 100%;
     margin-top: 32px;
 }
+
 .table--product--title {
     font-weight: 600;
     font-size: 20px;
@@ -46,6 +49,7 @@
     padding-left: 12px;
     box-shadow: $boxshadowcolor;
 }
+
 .product--search--input {
     width: 80%;
     height: 80%;
@@ -53,6 +57,7 @@
     outline: none;
     padding-left: 8px;
 }
+
 .search--icon {
     height: 36px;
     width: 36px;
@@ -63,6 +68,7 @@
     align-items: center;
     cursor: pointer;
     padding: 8px;
+
     &:active {
         background-color: $gray050;
     }
@@ -82,6 +88,7 @@
     width: 100%;
     border-bottom: $separator-default;
 }
+
 .product--header--content {
     height: 50px;
     width: 100%;
@@ -91,6 +98,7 @@
     border-radius: 8px;
     background-color: $gray050;
 }
+
 .product--header--title {
     font-size: 12px;
     font-weight: 600px;
@@ -99,9 +107,11 @@
     text-align: start;
     padding: 16px;
 }
+
 .product--wrapper--item {
     width: 100%;
 }
+
 .product--item {
     height: 50px;
     width: 100%;
@@ -123,6 +133,7 @@
     display: flex;
     align-items: center;
 }
+
 .product--item--time {
     width: 14.2%;
     font-size: 14px;
@@ -133,6 +144,7 @@
     padding: 16px;
     height: 54px;
 }
+
 .wrapper--action--left {
     display: flex;
     align-items: center;
@@ -156,6 +168,7 @@
     cursor: pointer;
     @include flexCenter;
 }
+
 .product--button--filter {
     width: 42px;
     height: 21px;
@@ -169,11 +182,13 @@
     cursor: pointer;
     text-decoration: none;
 }
+
 .container--icon--product {
     display: flex;
     align-items: center;
     justify-content: flex-start;
 }
+
 .product--icon {
     width: 18px;
     height: 18px;
@@ -181,6 +196,7 @@
     margin-left: 12px;
     display: block;
 }
+
 .product--item--status {
     width: 72px;
     height: 22px;
@@ -190,6 +206,7 @@
     line-height: 22px;
     text-align: center;
 }
+
 //paging
 .wrapper--paging {
     width: 100%;
@@ -211,6 +228,7 @@
     line-height: 20px;
     color: $gray500;
 }
+
 .paging--short {
     width: 14px;
     height: 19px;
@@ -221,16 +239,19 @@
     display: flex;
     align-items: center;
 }
+
 .paging--short--number {
     font-weight: 400;
     font-size: 12px;
     line-height: 19px;
 }
+
 .paging--short--icon {
     margin-left: 8px;
     color: $gray500;
     cursor: pointer;
 }
+
 .paging--count {
     width: 76px;
     height: 20px;
@@ -240,15 +261,19 @@
     color: $gray900;
     margin-left: 16px;
 }
+
 .paging--action {
     @include flexBetween;
     width: 80px;
 }
+
 .paging--action--icon {
     padding: 10px;
     width: 100%;
     margin-left: 16px;
-    cursor: pointer;}
+    cursor: pointer;
+}
+
 //addproduct
 .addproduct__container {
     width: 100%;
@@ -257,6 +282,7 @@
     flex-direction: column;
     justify-content: space-between;
 }
+
 .addproduct--wrapper {
     height: 372px;
     width: 100%;
@@ -266,19 +292,23 @@
     padding: 16px;
     margin: 16px 0px 16px 0px;
 }
+
 .addproduct--header {
     @include flexBetween;
     height: 60px;
     box-sizing: border-box;
 }
+
 .addproduct--header--title {
     @include fontL;
 }
+
 .addproduct--action {
     width: 200px;
     height: 100%;
     @include flexCenter;
 }
+
 .addproduct--save {
     @include flexCenter;
     width: 79px;
@@ -292,6 +322,7 @@
     border-radius: 8px;
     cursor: pointer;
 }
+
 .addproduct--back {
     width: 89px;
     height: 39px;
@@ -302,10 +333,12 @@
     color: $gray700;
     cursor: pointer;
 }
+
 .wrapper--gribsytem {
     box-sizing: border-box;
     padding: 32px, 24px, 32px, 24px;
 }
+
 .addproduct--content {
     display: grid;
 
@@ -315,6 +348,7 @@
     height: 280px;
     grid-gap: 42px;
 }
+
 .addproduct--name {
     position: relative;
     border-radius: 8px;
@@ -333,6 +367,7 @@
     align-items: center;
     padding-left: 16px;
 }
+
 .addproduct--date {
     width: 100%;
     height: 100%;
@@ -343,6 +378,7 @@
     padding-left: 16px;
     position: relative;
 }
+
 .addproduct--number--date {
     content: 'Giá bán';
     background-color: $white;
@@ -368,6 +404,7 @@
     align-items: center;
     padding-left: 16px;
 }
+
 //
 .addproduct--number--after {
     content: 'Ngày tạo';
@@ -383,6 +420,7 @@
     line-height: 12px;
     color: $gray500;
 }
+
 .addproduct--status {
     width: 100%;
     height: 100%;
@@ -392,6 +430,7 @@
     align-items: center;
     padding-left: 16px;
 }
+
 .addproduct--price {
     width: 100%;
     height: 100%;
@@ -402,6 +441,7 @@
     padding-left: 16px;
     position: relative;
 }
+
 //
 .addproduct--number--price {
     content: 'Giá bán';
@@ -417,6 +457,7 @@
     line-height: 12px;
     color: $gray500;
 }
+
 //input
 .addproduct--input--name {
     border: none;
@@ -451,6 +492,7 @@
     width: 96%;
     outline: none;
 }
+
 .addproduct--input--status {
     border: none;
     height: 24px;
@@ -458,6 +500,7 @@
     width: 96%;
     outline: none;
 }
+
 .addproduct--input--price {
     border: none;
     height: 24px;
@@ -483,6 +526,7 @@
     left: 250px;
     top: 70px;
 }
+
 .editproduct--wrapper {
     height: 372px;
     box-sizing: border-box;
@@ -492,19 +536,23 @@
     margin: 16px;
     width: 98%;
 }
+
 .editproduct--header {
     @include flexBetween;
     height: 60px;
     box-sizing: border-box;
 }
+
 .editproduct--header--title {
     @include fontL;
 }
+
 .editproduct--action {
     width: 200px;
     height: 100%;
     @include flexCenter;
 }
+
 .editproduct--save {
     @include flexCenter;
     width: 79px;
@@ -518,6 +566,7 @@
     border-radius: 8px;
     cursor: pointer;
 }
+
 .editproduct--back {
     width: 89px;
     height: 39px;
@@ -528,10 +577,12 @@
     color: $gray700;
     cursor: pointer;
 }
+
 .wrapper--gribsytem {
     box-sizing: border-box;
     padding: 32px, 24px, 32px, 24px;
 }
+
 .editproduct--content {
     display: grid;
 
@@ -541,6 +592,7 @@
     height: 280px;
     grid-gap: 42px;
 }
+
 .editproduct--name {
     position: relative;
     border-radius: 8px;
@@ -549,6 +601,7 @@
     align-items: center;
     padding-left: 16px;
 }
+
 .editproduct--name--after {
     background-color: $white;
     height: 12px;
@@ -573,6 +626,7 @@
     padding-left: 16px;
     position: relative;
 }
+
 .editproduct--group--after {
     background-color: $white;
     height: 12px;
@@ -586,6 +640,7 @@
     line-height: 12px;
     color: $gray500;
 }
+
 .editproduct--date {
     width: 100%;
     height: 100%;
@@ -596,6 +651,7 @@
     padding-left: 16px;
     position: relative;
 }
+
 .editproduct--number--date {
     content: 'Giá bán';
     background-color: $white;
@@ -621,6 +677,7 @@
     align-items: center;
     padding-left: 16px;
 }
+
 //
 .editproduct--number--after {
     content: 'Ngày tạo';
@@ -636,6 +693,7 @@
     line-height: 12px;
     color: $gray500;
 }
+
 .editproduct--status {
     width: 100%;
     height: 100%;
@@ -650,6 +708,7 @@
 #input__edit__status {
     width: 100%;
 }
+
 .editproduct--status--after {
     background-color: $white;
     height: 12px;
@@ -663,6 +722,7 @@
     line-height: 12px;
     color: $gray500;
 }
+
 .editproduct--price {
     width: 100%;
     height: 100%;
@@ -673,6 +733,7 @@
     padding-left: 16px;
     position: relative;
 }
+
 //
 .editproduct--number--price {
     content: 'Giá bán';
@@ -688,6 +749,7 @@
     line-height: 12px;
     color: $gray500;
 }
+
 //input
 .editproduct--input--name {
     border: none;
@@ -723,6 +785,7 @@
     width: 96%;
     outline: none;
 }
+
 .editproduct--input--status {
     border: none;
     height: 24px;
@@ -731,6 +794,7 @@
     outline: none;
     color: $blue500;
 }
+
 .editproduct--input--price {
     border: none;
     height: 24px;
@@ -755,6 +819,7 @@
     box-sizing: border-box;
     padding: 32px, 24px, 32px, 24px;
 }
+
 .filter--content {
     display: grid;
 
@@ -764,6 +829,7 @@
     height: 200px;
     grid-gap: 42px;
 }
+
 .filter--name {
     position: relative;
     border-radius: 8px;
@@ -782,6 +848,7 @@
     align-items: center;
     padding-left: 16px;
 }
+
 .filter--date {
     width: 100%;
     height: 100%;
@@ -792,6 +859,7 @@
     padding-left: 16px;
     position: relative;
 }
+
 .filter--number--date {
     content: 'Giá bán';
     background-color: $white;
@@ -817,6 +885,7 @@
     align-items: center;
     padding-left: 16px;
 }
+
 //
 .filter--number--after {
     content: 'Ngày tạo';
@@ -832,6 +901,7 @@
     line-height: 12px;
     color: $gray500;
 }
+
 .filter--status {
     width: 100%;
     height: 100%;
@@ -841,6 +911,7 @@
     align-items: center;
     padding-left: 16px;
 }
+
 .filter--price {
     width: 100%;
     height: 100%;
@@ -851,6 +922,7 @@
     padding-left: 16px;
     position: relative;
 }
+
 //
 .filter--number--price {
     content: 'Giá bán';
@@ -866,6 +938,7 @@
     line-height: 12px;
     color: $gray500;
 }
+
 //input
 .filter--input--name {
     border: none;
@@ -901,6 +974,7 @@
     width: 96%;
     outline: none;
 }
+
 .filter--input--status {
     border: none;
     height: 24px;
@@ -909,6 +983,7 @@
     outline: none;
     color: $blue500;
 }
+
 .filter--input--price {
     border: none;
     height: 24px;
@@ -932,6 +1007,7 @@
     background: rgba(0, 0, 0, 0.05);
     display: none;
 }
+
 .dlproduct--wrapper {
     @include flexCenterColum;
     margin-bottom: 250px;
@@ -942,10 +1018,12 @@
     border-radius: 16px;
     background-color: $gray050;
 }
+
 .dlproduct--wrapper--button {
     @include flexBetween;
     width: 30%;
 }
+
 .content--delete {
     padding: 16px;
     text-align: center;
@@ -971,6 +1049,7 @@
     cursor: pointer;
     @include flexCenter;
 }
+
 .dlproduct--button--delete {
     box-sizing: border-box;
     border: none;
@@ -985,14 +1064,16 @@
     cursor: pointer;
     @include flexCenter;
 }
+
 .warning {
     font-size: 12px;
     color: $red600;
     position: absolute;
     bottom: -24px;
     left: 16px;
- display: flex;
+    display: flex;
 }
+
 .wrapper--footer--edit {
     padding: 0px;
     box-sizing: border-box;
@@ -1003,4 +1084,9 @@
     max-width: 1317px;
     margin-left: 16px;
     margin-bottom: 86px;
+}
+
+.wrapper--topproduct {
+    display: flex;
+    gap: 16px
 }

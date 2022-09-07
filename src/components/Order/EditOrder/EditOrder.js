@@ -1,6 +1,6 @@
 import { Modal, Button, Placeholder, ButtonToolbar, Icon, Popover, Whisper, FlexboxGrid } from 'rsuite';
 import { Form as FromRsuite, FormGroup, ControlLabel } from 'rsuite';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { Form as FinalForm, Field } from 'react-final-form';
 import { FieldArray } from 'react-final-form-arrays';
 import PropTypes from 'prop-types';
@@ -17,25 +17,20 @@ import UploadAvataFrom from '../../Customer/AddCustomer/UploadForm/UploadAvataFr
 import NumberCustomField from '../../FinalFormComponent/NumberCustomField';
 import NumberFormatField from '../../FinalFormComponent/NumberFormatField';
 
-import { handleString, normalizePhone, totalHanlder } from '../../Function/Function';
-import { InfoOrder, MessValidate } from '../../SupportUser/Mess';
+import { handleString, normalizePhone, totalHanlder, totalHanlderBack, totalHanlderMinus } from '../../Function/Function';
+import { InfoOrder, MESS_VALIDATE } from '../../SupportUser/Mess';
 import { openNotifi } from '../../SupportUser/Notify';
 import CustomerInfoMenuSearch from '../../Customer/CustomerTable/CustomerInfo/CustomerInfoMenuSearch';
+import { ARRAY_VOUCHER, GEN, REGEX_EMAIL, REGEX_MOBILE } from '../../Function/Const';
 
 const EditOrder = (props) => {
-    const { product, customer, orders, prodvice = ['Hà Nội'], editOrder, item } = props;
+    const { product, customer, orders, prodvice = ['Hà Nội'], editOrder, item, user } = props;
     const [open, setOpen] = useState(false);
-    const [user, setUser] = useState();
     const [dis, setDis] = useState(customer.districts);
     const [statusEdit, setStatusEdit] = useState(true);
     const [isDebit, setIsDebit] = useState(item.debit > 0);
     const [idAvataCurrent, setIdAvataCurrent] = useState('');
     const [customerSearch, setCustomerSearch] = useState([]);
-    console.log(customer);
-    useEffect(() => {
-        const user = localStorage.getItem('lastName') + localStorage.getItem('firstName');
-        setUser(user);
-    }, []);
 
     const handleOpen = () => {
         setOpen(true);
@@ -64,8 +59,9 @@ const EditOrder = (props) => {
         let newValue = {
             ...values,
             mobile: values.mobile,
+            createDate: (values.createDate ??= today),
         };
-        await editOrderApi(newValue, item.idorder, openNotifi('success', 'order', 'edit'));
+        await editOrderApi(newValue, item.idorder, openNotifi('success', 'order', 'edit', user, item.id));
         await editOrder(newValue, item.idorder);
         setOpen(false);
     };
@@ -82,30 +78,19 @@ const EditOrder = (props) => {
         const dataProduct = product.find((item) => item.id === id);
         return dataProduct;
     }
-    const arrayVoucher = [
-        { label: '100,000đ', value: 100000 },
-        { label: 'Voucher 5% ', value: 5 },
-        { label: 'Voucher 15% ', value: 15 },
-    ];
-    const gen = [
-        { label: 'nam', value: 'nam' },
-        { label: 'nữ', value: 'nữ' },
-    ];
 
     //validate
-    const required = (value) => (value ? undefined : MessValidate.required);
+    const required = (value) => (value ? undefined : MESS_VALIDATE.required);
     const validateMobile = (mobile) => {
-        let regex = /^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/;
         if (!mobile) {
-            return MessValidate.requiredMobile;
-        } else if (!regex.test(mobile.replace(/\s/g, ''))) {
-            return MessValidate.mobile;
+            return MESS_VALIDATE.requiredMobile;
+        } else if (!REGEX_MOBILE.test(mobile.replace(/\s/g, ''))) {
+            return MESS_VALIDATE.mobile;
         } else return undefined;
     };
     const validateEmail = (email) => {
-        let re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (email && !re.test(email)) {
-            return MessValidate.email;
+        if (email && !REGEX_EMAIL.test(email)) {
+            return MESS_VALIDATE.email;
         } else return undefined;
     };
     function findProductCustomer(id, array) {
@@ -137,14 +122,14 @@ const EditOrder = (props) => {
             <Modal overflow={false} size="lg" show={open} onHide={handleClose}>
                 <Modal.Header>
                     <Modal.Title>
-                        Thêm mới đơn hàng
+                        Sửa hoá đơn
                         <span className="title--addOrder">
                             Người lập: <u>{user}</u>{' '}
                         </span>
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Placeholder.Graph height="580px" classPrefix="popup--addcustomer">
+                    <Placeholder.Graph height="650px" classPrefix="popup--addcustomer">
                         <FinalForm
                             mutators={{
                                 ...arrayMutators,
@@ -158,7 +143,7 @@ const EditOrder = (props) => {
                                 pristine,
                                 values,
                                 form: {
-                                    mutators: { push, pop },
+                                    mutators: { push, pop, remove },
                                 },
                             }) => (
                                 <FromRsuite onSubmit={handleSubmit} ref={saveData} className="from--addcustomer">
@@ -216,10 +201,14 @@ const EditOrder = (props) => {
                                                         });
                                                     }}
                                                     onClean={() => {
-                                                        form.reset();
-                                                        setStatusEdit(false);
+                                                        form.change('full_name', '');
+                                                        form.change('email', '');
+                                                        form.change('dob', '');
+                                                        form.change('city', '');
+                                                        form.change('districst', '');
+                                                        form.change('address', '');
+                                                        form.change('mobile', '');
                                                         setDis([]);
-                                                        setStatusEdit(false);
                                                         setIdAvataCurrent('');
                                                     }}
                                                 ></Field>
@@ -271,7 +260,6 @@ const EditOrder = (props) => {
                                                                         form.change('city', findCustomer(value).city);
                                                                         form.change('districst', findCustomer(value).distrist);
                                                                         setIdAvataCurrent(findCustomer(value).avata);
-                                                                        setStatusEdit(false);
                                                                     }
                                                                 }
                                                             }}
@@ -302,7 +290,7 @@ const EditOrder = (props) => {
                                                             name="gen"
                                                             disabled={statusEdit}
                                                             component={RadioCustomField}
-                                                            inputvalue={gen}
+                                                            inputvalue={GEN}
                                                             className="addorder--gen"
                                                             placeholder="..."
                                                             initialValue="nữ"
@@ -369,7 +357,16 @@ const EditOrder = (props) => {
                                                 </FormGroup>
                                             </div>
                                         </div>
+                                        {/* 
+                                        // --------------comment-------------------
+                                        TotalProduct = (number * price)
+                                        Total = sum(TotalProduct) * 1.08 VAT tofixed(0) 
+                                        Due, debit handle when fill money       
 
+                                        funciton(totalHandle): 
+                                        @param : array , (idproduct)
+                                        return :sum (price * number) - totalproduct curent(number*price)
+                                        */}
                                         <FlexboxGrid align="middle" className="addorder--product">
                                             <FlexboxGrid.Item colspan={6}>Sản phẩm</FlexboxGrid.Item>
                                             <FlexboxGrid.Item colspan={6}>Giá bán</FlexboxGrid.Item>
@@ -378,7 +375,34 @@ const EditOrder = (props) => {
                                             <FlexboxGrid.Item colspan={2}>
                                                 {' '}
                                                 <Icon icon="plus" onClick={() => push('product', undefined)} />{' '}
-                                                <Icon icon="minus" onClick={() => pop('product', undefined)} />{' '}
+                                                <Icon
+                                                    icon="minus"
+                                                    onClick={() => {
+                                                        form.change('money', 0);
+                                                        form.change('debit', 0);
+                                                        form.change('due', 0);
+                                                        if (values.product.length > 0) {
+                                                            pop('product', undefined);
+                                                            if (values.sale > 100) {
+                                                                form.change(
+                                                                    'total',
+                                                                    ((totalHanlderBack(values.product) - values.sale) * 1.08).toFixed(0),
+                                                                );
+                                                            } else if (values.sale < 100 && values !== undefined) {
+                                                                form.change(
+                                                                    'total',
+                                                                    (
+                                                                        (totalHanlderBack(values.product) -
+                                                                            values.sale * 0.01 * totalHanlderBack(values.product)) *
+                                                                        1.08
+                                                                    ).toFixed(0),
+                                                                );
+                                                            } else {
+                                                                form.change('total', totalHanlderBack(values.product) * 1.08).toFixed(0);
+                                                            }
+                                                        }
+                                                    }}
+                                                />{' '}
                                             </FlexboxGrid.Item>
                                         </FlexboxGrid>
 
@@ -393,7 +417,7 @@ const EditOrder = (props) => {
                                                                         <Field
                                                                             validate={(e) => {
                                                                                 if (!e) {
-                                                                                    return MessValidate.required;
+                                                                                    return MESS_VALIDATE.required;
                                                                                 } else if (
                                                                                     e &&
                                                                                     findProductCustomer(e, values.product).id === e
@@ -571,6 +595,52 @@ const EditOrder = (props) => {
                                                                         ></Field>
                                                                     </FormGroup>
                                                                 </FlexboxGrid.Item>
+                                                                <FlexboxGrid.Item className="minusproduct" colspan={2}>
+                                                                    {' '}
+                                                                    <Field
+                                                                        name={`${name}.minus`}
+                                                                        component={TextCustomField}
+                                                                        disabled
+                                                                    ></Field>
+                                                                    {/* remove product when click to minnus */}
+                                                                    {/* bug update listproduct */}
+                                                                    <i
+                                                                        onClick={() => {
+                                                                            form.change('money', 0);
+                                                                            form.change('debit', 0);
+                                                                            form.change('due', 0);
+
+                                                                            if (values.sale > 100) {
+                                                                                form.change(
+                                                                                    'total',
+                                                                                    (
+                                                                                        (totalHanlderMinus(values.product, index) -
+                                                                                            values.sale) *
+                                                                                        1.08
+                                                                                    ).toFixed(0),
+                                                                                );
+                                                                            } else if (values.sale < 100 && values !== undefined) {
+                                                                                form.change(
+                                                                                    'total',
+                                                                                    (
+                                                                                        (totalHanlderMinus(values.product, index) -
+                                                                                            values.sale *
+                                                                                                0.01 *
+                                                                                                totalHanlderMinus(values.product, index)) *
+                                                                                        1.08
+                                                                                    ).toFixed(0),
+                                                                                );
+                                                                            } else {
+                                                                                form.change(
+                                                                                    'total',
+                                                                                    totalHanlderMinus(values.product, index) * 1.08,
+                                                                                ).toFixed(0);
+                                                                            }
+                                                                            remove('product', index);
+                                                                        }}
+                                                                        className="fa-solid fa-minus"
+                                                                    ></i>{' '}
+                                                                </FlexboxGrid.Item>
                                                             </FlexboxGrid>
                                                         ))
                                                     }
@@ -581,7 +651,7 @@ const EditOrder = (props) => {
                                                 <FormGroup>
                                                     <Field
                                                         defaultstyle
-                                                        inputvalue={arrayVoucher}
+                                                        inputvalue={ARRAY_VOUCHER}
                                                         name="sale"
                                                         placeholder="Voucher"
                                                         validate={function (e) {
@@ -642,12 +712,12 @@ const EditOrder = (props) => {
                                                 </FormGroup>
                                             </div>
                                             <div className="addorder--total grid--handle">
-                                                <div className="wrapper--addorder--total">Tổng tiền đơn hàng (Đã bảo gồm 8% VAT)</div>
+                                                <div className="wrapper--addorder--total">Tổng tiền đơn hàng (Đã bao gồm 8% VAT)</div>
                                                 <FormGroup>
                                                     <Field name="total" component={NumberFormatField} disabled></Field>
                                                 </FormGroup>
                                             </div>
-                                            <div className="addorder--credit grid--handle">
+                                            <div className="editorder--credit grid--handle">
                                                 <div>Tổng tiền thanh toán </div>
                                                 <Button
                                                     onClick={() => {
@@ -715,7 +785,6 @@ const EditOrder = (props) => {
                                             <Button
                                                 onClick={() => {
                                                     form.reset();
-                                                    setStatusEdit(false);
                                                     setDis([]);
                                                     setIdAvataCurrent('');
                                                 }}
