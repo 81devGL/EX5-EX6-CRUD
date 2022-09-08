@@ -63,11 +63,10 @@ Automatically pick the most recent 7 days
 + Tại bảng top KH, sẽ hiển thị top 10 KH có giá trị đóng góp cao nhất , sắp xếp giảm dần
 + Tại bảng Top SP , list 10 sp có số lần bán nhiều nhất , sắp xếp giảm dần.
 
-# Bonus 
+# khác 
 +  Lọc báo cáo hoá đơn theo Khoảng thời gian( tổng tiền đơn hàng, tổng nợ, tổng số đơn).
 +  Cho phép xoá nhiều đơn hàng cùng lúc.
 +  DashBroard :  Biểu đồ(Chart Doanh thu) Update theo thời gian thực và Order 6 đơn hàng gần nhất, Timeline đơn giản
-
 
 #Pre setup
 You need to install JSON SEVER on your computer in oder to run the database:
