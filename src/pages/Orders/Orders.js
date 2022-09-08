@@ -290,7 +290,7 @@ function Orders() {
                             );
                         })}
                     </div>
-                    <div className="wrapper--paging">
+                    <div className="wrapper--paging--order">
                         <Pagination
                             prev
                             last
