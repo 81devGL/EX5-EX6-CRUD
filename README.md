@@ -74,7 +74,7 @@ You need to install JSON SEVER on your computer in oder to run the database:
 - `npm install -g json-server`
 
 #load node-module 
-`npm i -force`
+`npm i --force`
 
 #Run Front-End: `npm start`
 - Open http://localhost:3001 to display it in your browser,
