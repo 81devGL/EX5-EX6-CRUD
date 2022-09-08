@@ -8,16 +8,16 @@ import RSDateRangePicker from '../../../../FinalFormComponent/RSDateRangePicker'
 import { numberWithCommas, totalOrderCartReport } from '../../../../Function/Function';
 import { removeString } from '../../../../Function/Function';
 function HeaderOrderInfo(props) {
-    const { orders, renderReport, rootOrder} = props;
-    
+    const { orders, renderReport, rootOrder } = props;
+
     const totalReport = totalOrderCartReport(orders, 'total');
     const totalDebit = totalOrderCartReport(orders, 'debit');
-    const totalOrder = orders.length
+    const totalOrder = orders.length;
     const [tottal, setTotal] = useState();
     const [debit, setDebit] = useState();
     const [arrayDay, setArrayDay] = useState([]);
 
-    let hanle
+    let hanle;
     useEffect(() => {
         let date = new Date();
         let last = new Date(date.getTime() - 7 * 24 * 60 * 60 * 1000);
@@ -31,9 +31,9 @@ function HeaderOrderInfo(props) {
         let lastY = last.getFullYear();
         let lastfday = lastY + '-' + lastMo + '-' + lastday;
         let today = year + '-' + month + '-' + day;
-        setArrayDay([today,lastfday]);
+        setArrayDay([today, lastfday]);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [hanle]);
     const onSubmit = () => {};
 

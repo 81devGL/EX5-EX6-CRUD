@@ -333,6 +333,7 @@
     color: #6b7280;
     text-align: center;
     z-index: 10;
+
 }
 
 .debit--wrapper {
@@ -497,15 +498,18 @@
     height: 100px;
     width: 100%;
     padding-left: 16px;
-    @include flexBetween
+    @include flexBetween;
+
 }
 
 .infoorder--des--wrapper {
     width: 400px;
     display: flex;
     flex-direction: column;
-    height: 100%;
+    height: 95px;
     margin-top: 16px;
+    overflow-y: auto;
+
 
 }
 

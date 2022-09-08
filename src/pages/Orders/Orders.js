@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import styles from './Order.module.scss';
 import classNames from 'classnames/bind';
 
-import { FlexboxGrid, Pagination } from 'rsuite';
+import { FlexboxGrid, Loader, Pagination } from 'rsuite';
 import { getOrders } from '../../ApiService/ApiOrder';
 
 import { handleString, removeString } from '../../components/Function/Function';
@@ -23,12 +23,13 @@ function Orders() {
     const [product, setProduct] = useState([]);
     const [isDelete, setIsDelete] = useState(false);
     const [selectItem, setSelectItem] = useState([]);
-    // array current
+    const [loader, setLoader] = useState(true);
+
     const dataOrder = useRef();
     const [orders, setOrders] = useState([]);
     const [prodvice, setProvince] = useState();
     const [user, setUser] = useState('');
-
+    //===handle delele====
     function deleteOrder(id) {
         const newOrder = orders.filter((item) => {
             return item.id !== id;
@@ -125,19 +126,20 @@ function Orders() {
 
                 const userLocal = localStorage.getItem('lastName') + localStorage.getItem('firstName');
                 const userSession = sessionStorage.getItem('lastName') + sessionStorage.getItem('firstName');
-
+                setLoader(false);
                 if (userLocal) {
                     setUser(userLocal);
                 } else setUser(userSession);
             } catch (error) {
                 console.log(error);
+                setLoader(false);
             }
         };
         fetchApi();
     }, []);
     //-----Search----
 
-    const handleFilter = (event) => {
+    const handleSearch = (event) => {
         const searchWord = event.target.value;
         setWordEntered(searchWord);
         const newFilter = dataOrder.current.filter((item) => {
@@ -201,7 +203,7 @@ function Orders() {
                                 <input
                                     className={cx('customer--search--input')}
                                     placeholder="Tìm kiếm mã đơn hàng... "
-                                    onChange={handleFilter}
+                                    onChange={handleSearch}
                                     value={wordEntered}
                                 />
                                 <div>
@@ -317,6 +319,13 @@ function Orders() {
                     </div>
                 </div>
             </div>
+            {loader ? (
+                <div className="loader---id">
+                    <Loader vertical content="Hệ thống đang tải dữ liệu" speed="slow" size="lg" />{' '}
+                </div>
+            ) : (
+                ''
+            )}
         </>
     );
 }

@@ -16,11 +16,11 @@ function InfoCustomerOrder(props) {
                 <FlexboxGrid.Item colspan={1}>
                     {' '}
                     {showInfo ? (
-                        <i class="fa-solid fa-chevron-up" onClick={() => setShowInfo(false)}>
+                        <i className="fa-solid fa-chevron-up pointer" onClick={() => setShowInfo(false)}>
                             {' '}
                         </i>
                     ) : (
-                        <i class="fa-solid fa-chevron-down" onClick={() => setShowInfo(true)}></i>
+                        <i className="fa-solid fa-chevron-down pointer" onClick={() => setShowInfo(true)}></i>
                     )}
                 </FlexboxGrid.Item>
             </FlexboxGrid>

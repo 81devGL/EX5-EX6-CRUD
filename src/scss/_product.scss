@@ -1,7 +1,6 @@
 .wrapper--product {
     display: flex;
     width: 100%;
-    max-width: 1317px;
     min-height: 799px;
     box-sizing: border-box;
     gap: 16px;
@@ -513,7 +512,6 @@
 .wrapper--edit {
     display: none;
     width: calc(100% - 250px);
-    max-width: 1350px;
     height: 100%;
     box-sizing: border-box;
     flex-direction: column;
@@ -1081,7 +1079,7 @@
     border-radius: 16px;
     margin-bottom: 16px;
     width: 100%;
-    max-width: 1317px;
+
     margin-left: 16px;
     margin-bottom: 86px;
 }

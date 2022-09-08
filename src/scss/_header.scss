@@ -13,6 +13,7 @@
     left: 0;
     border-bottom: $separator-default;
     z-index: 111;
+    justify-content: space-between;
 }
 
 
@@ -36,7 +37,6 @@
     align-items: center;
     padding: 0px 0px 0px 16px;
     gap: 12px;
-    width: 1091px;
     height: 32px;
 }
 

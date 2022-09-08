@@ -125,7 +125,6 @@ function totalOrderCartReport(array, element) {
 
 const handleFilter = (value, array, setArray, refCustomer) => {
     const newFilter = array.filter((item) => {
-        console.log(item);
         if (!item.address) item.address = 'Hà nội';
         if (!item.full_name) item.full_name = 'aaaaaaaaa';
         if (!item.mobile) item.mobile = '000000000013';

@@ -6,11 +6,13 @@ import { getOrders } from '../../ApiService/ApiOrder';
 import { getProducts } from '../../ApiService/apiProduct';
 import TopCustomer from '../../components/Dashboard/TopCustomer/TopCustomer';
 import BestSaleProduct from '../../components/Dashboard/BestSaleProduct/BestSaleProduct';
+import { Loader } from 'rsuite';
 
 function Dashbroad() {
     const [customer, setCustomer] = useState([]);
     const [orders, setOrders] = useState([]);
     const [product, setProduct] = useState([]);
+    const [loader, setLoader] = useState(true);
 
     useEffect(() => {
         const fetchApi = async () => {
@@ -21,8 +23,10 @@ function Dashbroad() {
                 setOrders(allOrders);
                 const allProduct = await getProducts();
                 setProduct(allProduct);
+                setLoader(false);
             } catch (error) {
                 console.log(error);
+                setLoader(false);
             }
         };
         fetchApi();
@@ -70,6 +74,13 @@ function Dashbroad() {
                     </div>
                 </div>
             </div>
+            {loader ? (
+                <div className="loader---id blue">
+                    <Loader speed="slow" vertical content="Hệ thống đang tải dữ liệu" size="lg" />{' '}
+                </div>
+            ) : (
+                ''
+            )}
         </div>
     );
 }

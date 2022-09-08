@@ -29,12 +29,13 @@ const AddOrder = (props) => {
     const { product, customer, orders, prodvice = ['Hà Nội'], onGetdata, user } = props;
 
     const [open, setOpen] = useState(false);
-    const [idAvataCurrent, setIdAvataCurrent] = useState('');
+    const [idAvataCurrent, setIdAvataCurrent] = useState(''); //id avata
     const [idRef, setIdRef] = useState('');
     const [dis, setDis] = useState([]);
     const [statusEdit, setStatusEdit] = useState(false);
     const [isDebit, setIsDebit] = useState(false);
     const [customerSearch, setCustomerSearch] = useState([]);
+    const [idDisProduct, setIdDisProduct] = useState([]); //  array id product (duplicate product handler)
 
     const listProductRef = useRef();
     const refCustomer = useRef();
@@ -44,14 +45,17 @@ const AddOrder = (props) => {
 
     const handleOpen = () => {
         setOpen(true);
+        setIdDisProduct([]);
     };
 
     const handleClose = async () => {
         setOpen(false);
         setIdAvataCurrent('');
+        setIdDisProduct([]);
     };
 
     // add item and rendering component parrent with callback
+
     const onSubmit = async (values) => {
         if (!values.city) {
             values.city = prodvice[0].name;
@@ -84,7 +88,7 @@ const AddOrder = (props) => {
             }
             let newCustomer = {
                 city: values.city,
-                address: values.address ? values.address : '90 Trần duy hưng',
+                address: (values.address ??= '90 Trần duy hưng'),
                 distrist: values.districst,
                 full_name: values.full_name,
                 note: values.note,
@@ -239,7 +243,7 @@ const AddOrder = (props) => {
                                                             form.change('districst', findCustomer(id).distrist);
                                                             form.change('address', findCustomer(id).address);
                                                             form.change('mobile', findCustomer(id).mobile);
-                                                            form.change('idorder', orders[orders.length - 1].id + 1);
+                                                            form.change('idorder', orders[orders.length - 1].idorder + 1);
                                                             form.change('gen', findCustomer(id).gen);
                                                         });
                                                     }}
@@ -323,6 +327,7 @@ const AddOrder = (props) => {
                                                             className="addorder--name"
                                                             placeholder=""
                                                             disabled={statusEdit}
+                                                            validate={required}
                                                             onBlur={() => {
                                                                 if (!values.idorder) {
                                                                     form.change('idorder', orders[orders.length - 1].idorder + 1);
@@ -430,6 +435,7 @@ const AddOrder = (props) => {
                                                 <Icon
                                                     icon="minus"
                                                     onClick={() => {
+                                                        setIdDisProduct(idDisProduct.slice(0, -1));
                                                         if (values.product.length > 0) {
                                                             pop('product', undefined);
                                                             if (values.sale > 100) {
@@ -472,12 +478,22 @@ const AddOrder = (props) => {
                                                                             inputvalue={product}
                                                                             labelKey="name"
                                                                             valueKey="id"
+                                                                            disabledItemValues={idDisProduct}
                                                                             onSelect={(id) => {
                                                                                 form.change(`${name}.price`, findProduct(id).price);
                                                                                 form.change(`${name}.name`, findProduct(id).name);
                                                                                 form.change('money', 0);
                                                                                 form.change('debit', 0);
                                                                                 form.change('due', 0);
+
+                                                                                if (values.product[index]) {
+                                                                                    const newArrr = [...idDisProduct].filter(
+                                                                                        (item) => item !== values.product[index].id,
+                                                                                    );
+                                                                                    setIdDisProduct([...newArrr, id]);
+                                                                                } else {
+                                                                                    setIdDisProduct([...idDisProduct, id]);
+                                                                                }
 
                                                                                 if (values.product[index]) {
                                                                                     form.change(
@@ -542,6 +558,11 @@ const AddOrder = (props) => {
                                                                                     form.change(`${name}.number`, 0);
                                                                                     form.change(`${name}.price`, 0);
                                                                                     form.change(`${name}.totalproduct`, 0);
+                                                                                    setIdDisProduct(
+                                                                                        idDisProduct.filter(
+                                                                                            (e) => e !== values.product[index].id,
+                                                                                        ),
+                                                                                    );
 
                                                                                     form.change(
                                                                                         'total',
@@ -648,6 +669,10 @@ const AddOrder = (props) => {
                                                                     {/* bug update listproduct */}
                                                                     <i
                                                                         onClick={() => {
+                                                                            setIdDisProduct(
+                                                                                idDisProduct.filter((e) => e !== values.product[index].id),
+                                                                            );
+
                                                                             remove('product', index);
                                                                             form.change('money', 0);
                                                                             form.change('debit', 0);
@@ -835,6 +860,7 @@ const AddOrder = (props) => {
                                                     setIdRef('');
                                                     setDis([]);
                                                     setIdAvataCurrent('');
+                                                    setIdDisProduct([]);
                                                 }}
                                                 color="blue"
                                             >

@@ -34,12 +34,12 @@ function BestSaleProduct(props) {
         return e;
     });
     const newArr = pro.sort(function (a, b) {
-        return parseFloat(b.sale) - parseFloat(a.sale);
+        return parseFloat(a.sale) - parseFloat(b.sale);
     });
 
     return (
         <div className="table2--wrapper--item">
-            {newArr.map((item) => {
+            {handleArrayCut(newArr, 10).map((item) => {
                 const ordersArray = handleArrayCut(item.orders.reverse(), 10);
                 if (!product.img) {
                     product.img = 'tuanpham/gyhrtfhhlcx8suhsxe1t';

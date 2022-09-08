@@ -807,50 +807,6 @@
     {
       "createDate": "2022-09-07",
       "gen": "nữ",
-      "mobile": "0988888888",
-      "full_name": "Thêm mới ",
-      "email": "duytuanpp@gmail.com",
-      "dob": "2011-02-17",
-      "city": "Thành phố Hà Nội",
-      "districst": "Quận Long Biên",
-      "address": "Số 90 Trần Thái Tông",
-      "idorder": 2022090067,
-      "customer": 14411235,
-      "product": [
-        {
-          "price": 3000000,
-          "name": "Iphone 8",
-          "id": 3,
-          "number": "4",
-          "totalproduct": 12000000
-        },
-        {
-          "price": 3000000,
-          "name": "Iphone 12",
-          "id": 4,
-          "number": "2",
-          "totalproduct": 6000000
-        },
-        {
-          "price": 15600000,
-          "name": "Iphone 11",
-          "id": 5,
-          "number": "2",
-          "totalproduct": 31200000
-        }
-      ],
-      "money": 45165600,
-      "debit": 0,
-      "due": 0,
-      "total": 45165600,
-      "sale": 15,
-      "status": "Hoàn thành",
-      "userCreate": "HalvorsonJeanne",
-      "id": 2022090061
-    },
-    {
-      "createDate": "2022-09-07",
-      "gen": "nữ",
       "mobile": "0999999995",
       "full_name": "hana taylor",
       "email": "ha1na@gmail.com",
@@ -920,92 +876,6 @@
       "status": "Hoàn thành",
       "userCreate": "HalvorsonJeanne",
       "id": 2022090064
-    },
-    {
-      "createDate": "2022-08-30",
-      "gen": "nữ",
-      "mobile": "0999999990",
-      "idorder": 2022090065,
-      "full_name": "Sửa khách hàng",
-      "email": "hana@gmail.com",
-      "dob": "1999-06-12",
-      "city": "Thành phố Hải Phòng",
-      "districst": "Quận Hải An",
-      "address": "Số 90 Trần Thái Tông",
-      "customer": 1331224,
-      "product": [
-        {
-          "price": 3000000,
-          "name": "Iphone 12",
-          "id": 4,
-          "number": "2",
-          "totalproduct": 6000000
-        },
-        {
-          "price": 1900000,
-          "name": "airpord pro",
-          "id": 8,
-          "number": "2",
-          "totalproduct": 3800000
-        },
-        {
-          "price": 1000000,
-          "name": "Iphone X",
-          "id": 1,
-          "number": "2",
-          "totalproduct": 2000000
-        },
-        {
-          "price": 2000000,
-          "name": "Iphone 9",
-          "id": 2,
-          "number": "2",
-          "totalproduct": 4000000
-        },
-        {
-          "price": 3000000,
-          "name": "Iphone 12",
-          "id": 4,
-          "totalproduct": 6000000,
-          "number": "2"
-        },
-        {
-          "price": 15000000,
-          "name": "macbook m1",
-          "id": 6,
-          "number": "2",
-          "totalproduct": 30000000
-        },
-        {
-          "price": 1900000,
-          "name": "airpord 2",
-          "id": 7,
-          "number": "2",
-          "totalproduct": 3800000
-        },
-        {
-          "price": 15600000,
-          "name": "Iphone 11",
-          "id": 5,
-          "totalproduct": 46800000,
-          "number": "3"
-        },
-        {
-          "price": 1900000,
-          "name": "airpord",
-          "id": 9,
-          "number": "3",
-          "totalproduct": 5700000
-        }
-      ],
-      "money": 99235800,
-      "debit": 0,
-      "due": 0,
-      "total": 99235800,
-      "sale": 15,
-      "status": "Hoàn thành",
-      "userCreate": "HalvorsonJeanne",
-      "id": 2022090065
     },
     {
       "createDate": "2022-09-07",
@@ -1182,6 +1052,438 @@
       "status": "Còn nợ",
       "userCreate": "HalvorsonJeanne",
       "id": 2022090070
+    },
+    {
+      "createDate": "2022-09-08",
+      "gen": "nữ",
+      "mobile": "0999999999",
+      "full_name": "hana",
+      "email": "hana@gmail.com",
+      "dob": "1999-06-12",
+      "city": "Thành phố Hà Nội",
+      "districst": "Quận Hoàn Kiếm",
+      "address": "Số 90 Trần Thái Tông",
+      "idorder": 2022090071,
+      "customer": 1331114,
+      "product": [
+        {
+          "price": 3000000,
+          "name": "Iphone 8",
+          "id": 3,
+          "totalproduct": 9000000,
+          "number": "3"
+        },
+        {
+          "price": 3000000,
+          "name": "Iphone 12",
+          "id": 4,
+          "totalproduct": 9000000,
+          "number": "3"
+        }
+      ],
+      "money": 16524000,
+      "debit": 0,
+      "due": 0,
+      "total": 16524000,
+      "sale": 15,
+      "status": "Hoàn thành",
+      "userCreate": "HalvorsonJeanne",
+      "id": 2022090071
+    },
+    {
+      "createDate": "2022-09-08",
+      "gen": "nữ",
+      "mobile": "0869526656",
+      "product": [
+        {
+          "price": 3000000,
+          "name": "Iphone 8",
+          "id": 3,
+          "number": "1",
+          "totalproduct": 3000000
+        },
+        {
+          "price": 3000000,
+          "name": "Iphone 8",
+          "id": 3,
+          "number": "3",
+          "totalproduct": 9000000
+        },
+        {
+          "price": 3000000,
+          "name": "Iphone 12",
+          "id": 4,
+          "number": "2",
+          "totalproduct": 6000000
+        },
+        {
+          "price": 15000000,
+          "name": "macbook m1",
+          "id": 6,
+          "totalproduct": 15000000,
+          "number": "1"
+        }
+      ],
+      "money": 30294000,
+      "debit": 0,
+      "due": 0,
+      "full_name": "Hana yuiki",
+      "email": "tuanpham@gmail.com",
+      "dob": "2022-08-02",
+      "city": "Tỉnh Hà Giang",
+      "districst": "Huyện Mèo Vạc",
+      "address": "Số 90 Trần Duy Hưng",
+      "idorder": 2022090073,
+      "customer": 14411246,
+      "status": "Hoàn thành",
+      "userCreate": "HalvorsonJeanne",
+      "id": 2022090072,
+      "total": 30294000,
+      "sale": 15
+    },
+    {
+      "createDate": "2022-09-08",
+      "gen": "nữ",
+      "mobile": "0898899985",
+      "product": [
+        {
+          "price": 2000000,
+          "name": "Iphone 9",
+          "id": 2,
+          "number": "3",
+          "totalproduct": 6000000
+        },
+        {
+          "price": 1000000,
+          "name": "Iphone X",
+          "id": 1,
+          "number": "4",
+          "totalproduct": 4000000
+        },
+        {
+          "price": 3000000,
+          "name": "Iphone 8",
+          "id": 3,
+          "number": "3",
+          "totalproduct": 9000000
+        }
+      ],
+      "money": 20520000,
+      "debit": 0,
+      "due": 0,
+      "total": 20520000,
+      "idorder": 2022090074,
+      "full_name": "Test sửa KH",
+      "email": "email@gmail.com",
+      "dob": "2022-04-28",
+      "city": "Thành phố Hà Nội",
+      "districst": "Quận Hoàn Kiếm",
+      "address": "Số 90 Trần Thái Tông",
+      "customer": 14411239,
+      "status": "Hoàn thành",
+      "userCreate": "HalvorsonJeanne",
+      "id": 2022090074
+    },
+    {
+      "createDate": "2022-09-08",
+      "gen": "nữ",
+      "mobile": "0999999999",
+      "full_name": "hana",
+      "email": "hana@gmail.com",
+      "dob": "1999-06-12",
+      "city": "Thành phố Hà Nội",
+      "districst": "Quận Hoàn Kiếm",
+      "address": "Số 90 Trần Thái Tông",
+      "idorder": 2022090075,
+      "customer": 1331114,
+      "product": [
+        {
+          "price": 3000000,
+          "name": "Iphone 8",
+          "id": 3,
+          "number": "2",
+          "totalproduct": 6000000
+        },
+        {
+          "price": 3000000,
+          "name": "Iphone 12",
+          "id": 4,
+          "totalproduct": 6000000,
+          "number": "2"
+        }
+      ],
+      "money": 11016000,
+      "debit": 0,
+      "due": 0,
+      "sale": 15,
+      "status": "Hoàn thành",
+      "userCreate": "HalvorsonJeanne",
+      "id": 2022090075,
+      "total": 11016000
+    },
+    {
+      "createDate": "2022-09-08",
+      "gen": "nữ",
+      "mobile": "0999999990",
+      "full_name": "Sửa khách hàng",
+      "email": "hana@gmail.com",
+      "dob": "1999-06-12",
+      "city": "Thành phố Hải Phòng",
+      "districst": "Quận Hải An",
+      "address": "Số 90 Trần Thái Tông",
+      "idorder": 2022090077,
+      "customer": 1331224,
+      "product": [
+        {
+          "price": 2000000,
+          "name": "Iphone 9",
+          "id": 2,
+          "number": "2",
+          "totalproduct": 4000000
+        }
+      ],
+      "money": 3672000,
+      "debit": 0,
+      "due": 0,
+      "total": 3672000,
+      "sale": 15,
+      "status": "Hoàn thành",
+      "userCreate": "HalvorsonJeanne",
+      "id": 2022090077
+    },
+    {
+      "createDate": "2022-09-08",
+      "gen": "nữ",
+      "mobile": "0999999999",
+      "full_name": "hana",
+      "email": "hana@gmail.com",
+      "dob": "1999-06-12",
+      "city": "Thành phố Hà Nội",
+      "districst": "Quận Hoàn Kiếm",
+      "address": "Số 90 Trần Thái Tông",
+      "idorder": 2022090078,
+      "customer": 1331114,
+      "product": [
+        {
+          "price": 2000000,
+          "name": "Iphone 9",
+          "id": 2,
+          "number": "3",
+          "totalproduct": 6000000
+        }
+      ],
+      "money": 6372000,
+      "debit": 0,
+      "due": 0,
+      "total": 6372000,
+      "sale": 100000,
+      "status": "Hoàn thành",
+      "userCreate": "HalvorsonJeanne",
+      "id": 2022090078
+    },
+    {
+      "createDate": "2022-09-08",
+      "gen": "nữ",
+      "mobile": "0999999995",
+      "full_name": "hana taylor",
+      "email": "ha1na@gmail.com",
+      "dob": "1999-06-12",
+      "city": "Tỉnh Cao Bằng",
+      "districst": "Huyện Trùng Khánh",
+      "address": "Số 90 Trần Thái Tông",
+      "idorder": 2022090079,
+      "customer": 14411234,
+      "product": [
+        {
+          "price": 3000000,
+          "name": "Iphone 8",
+          "id": 3,
+          "number": "2",
+          "totalproduct": 6000000
+        },
+        {
+          "price": 3000000,
+          "name": "Iphone 12",
+          "id": 4,
+          "number": "3",
+          "totalproduct": 9000000
+        }
+      ],
+      "money": 13770000,
+      "debit": 0,
+      "due": 0,
+      "total": 13770000,
+      "sale": 15,
+      "status": "Hoàn thành",
+      "userCreate": "HalvorsonJeanne",
+      "id": 2022090079
+    },
+    {
+      "createDate": "2022-09-08",
+      "gen": "nữ",
+      "full_name": "hana",
+      "email": "hana@gmail.com",
+      "dob": "1999-06-12",
+      "city": "Thành phố Hà Nội",
+      "districst": "Quận Hoàn Kiếm",
+      "address": "Số 90 Trần Thái Tông",
+      "mobile": "0999999999",
+      "idorder": 2022090080,
+      "customer": 1331114,
+      "product": [
+        {
+          "price": 15600000,
+          "name": "Iphone 11",
+          "id": 5,
+          "number": "2",
+          "totalproduct": 31200000
+        },
+        {
+          "price": 15000000,
+          "name": "macbook m1",
+          "id": 6,
+          "number": "2",
+          "totalproduct": 30000000
+        }
+      ],
+      "money": 56181600,
+      "debit": 0,
+      "due": 0,
+      "total": 56181600,
+      "sale": 15,
+      "status": "Hoàn thành",
+      "userCreate": "HalvorsonJeanne",
+      "id": 2022090080
+    },
+    {
+      "createDate": "2022-09-08",
+      "gen": "nữ",
+      "mobile": "0999999999",
+      "full_name": "hana",
+      "email": "hana@gmail.com",
+      "dob": "1999-06-12",
+      "city": "Thành phố Hà Nội",
+      "districst": "Quận Hoàn Kiếm",
+      "address": "Số 90 Trần Thái Tông",
+      "idorder": 2022090081,
+      "customer": 1331114,
+      "product": [
+        {
+          "price": 2000000,
+          "name": "Iphone 9",
+          "id": 2,
+          "number": "2",
+          "totalproduct": 4000000
+        },
+        {
+          "price": 3000000,
+          "name": "Iphone 12",
+          "id": 4,
+          "number": "2",
+          "totalproduct": 6000000
+        },
+        {
+          "price": 15000000,
+          "name": "macbook m1",
+          "id": 6,
+          "number": "2",
+          "totalproduct": 30000000
+        }
+      ],
+      "money": 43200000,
+      "debit": 0,
+      "due": 0,
+      "total": 43200000,
+      "status": "Hoàn thành",
+      "userCreate": "HalvorsonJeanne",
+      "id": 2022090081
+    },
+    {
+      "createDate": "2022-09-08",
+      "gen": "nam",
+      "mobile": "0965336566",
+      "full_name": "Tuấn phạm",
+      "email": "tuanpham@gmail.com",
+      "city": "Thành phố Hà Nội",
+      "districst": "Quận Hoàn Kiếm",
+      "address": "Hà nội",
+      "idorder": 2022090082,
+      "customer": 14411247,
+      "product": [
+        {
+          "price": 15600000,
+          "name": "Iphone 11",
+          "id": 5,
+          "number": "4",
+          "totalproduct": 62400000
+        },
+        {
+          "price": 3000000,
+          "name": "Iphone 8",
+          "id": 3,
+          "number": "3",
+          "totalproduct": 9000000
+        }
+      ],
+      "money": 65545200,
+      "debit": 0,
+      "due": 0,
+      "total": 65545200,
+      "sale": 15,
+      "status": "Hoàn thành",
+      "userCreate": "HalvorsonJeanne",
+      "id": 2022090082
+    },
+    {
+      "createDate": "2022-09-08",
+      "gen": "nữ",
+      "full_name": "Test format ",
+      "email": "duytuanp@gmail.com",
+      "dob": "2003-02-01",
+      "city": "Tỉnh Điện Biên",
+      "districst": "Huyện Mường Nhé",
+      "address": "Số 90 Trần Thái Tông",
+      "mobile": "0933366699",
+      "idorder": 2022090083,
+      "customer": 14411241,
+      "product": [
+        {
+          "price": 2000000,
+          "name": "Iphone 9",
+          "id": 2,
+          "number": "2",
+          "totalproduct": 4000000
+        },
+        {
+          "price": 3000000,
+          "name": "Iphone 12",
+          "id": 4,
+          "number": "3",
+          "totalproduct": 9000000
+        },
+        {
+          "price": 15600000,
+          "name": "Iphone 11",
+          "id": 5,
+          "number": "2",
+          "totalproduct": 31200000
+        },
+        {
+          "price": 15000000,
+          "name": "macbook m1",
+          "id": 6,
+          "number": "2",
+          "totalproduct": 30000000
+        }
+      ],
+      "money": 68115600,
+      "debit": 0,
+      "due": 0,
+      "sale": 15,
+      "status": "Hoàn thành",
+      "userCreate": "HalvorsonJeanne",
+      "id": 2022090083,
+      "total": 68115600
     }
   ],
   "TIME_LINE": [
@@ -1459,6 +1761,221 @@
       "des": "HalvorsonJeanne đã sửa đơn hàng 2022090070",
       "time": "17:06(07/09)",
       "id": 56
+    },
+    {
+      "des": "HalvorsonJeanne đã tạo đơn hàng 2022090071",
+      "time": "09:43(08/09)",
+      "id": 57
+    },
+    {
+      "des": "HalvorsonJeanne đã tạo đơn hàng 2022090072",
+      "time": "09:59(08/09)",
+      "id": 58
+    },
+    {
+      "des": "HalvorsonJeanne đã tạo đơn hàng 2022090073",
+      "time": "10:09(08/09)",
+      "id": 59
+    },
+    {
+      "des": "HalvorsonJeanne đã xoá đơn hàng 2022090073",
+      "time": "10:09(08/09)",
+      "id": 60
+    },
+    {
+      "des": "HalvorsonJeanne đã sửa đơn hàng 2022090072",
+      "time": "10:09(08/09)",
+      "id": 61
+    },
+    {
+      "des": "HalvorsonJeanne đã sửa đơn hàng 2022090072",
+      "time": "11:39(08/09)",
+      "id": 62
+    },
+    {
+      "des": "HalvorsonJeanne đã tạo đơn hàng 2022090073",
+      "time": "11:39(08/09)",
+      "id": 63
+    },
+    {
+      "des": "HalvorsonJeanne đã tạo đơn hàng 2022090074",
+      "time": "12:41(08/09)",
+      "id": 64
+    },
+    {
+      "des": "HalvorsonJeanne đã xoá đơn hàng 2022090074",
+      "time": "12:41(08/09)",
+      "id": 65
+    },
+    {
+      "des": "HalvorsonJeanne đã tạo đơn hàng 2022090074",
+      "time": "12:43(08/09)",
+      "id": 66
+    },
+    {
+      "des": "HalvorsonJeanne đã tạo đơn hàng 2022090075",
+      "time": "13:45(08/09)",
+      "id": 67
+    },
+    {
+      "des": "HalvorsonJeanne đã xoá đơn hàng 2022090075",
+      "time": "13:45(08/09)",
+      "id": 68
+    },
+    {
+      "des": "HalvorsonJeanne đã tạo đơn hàng 2022090075",
+      "time": "13:47(08/09)",
+      "id": 69
+    },
+    {
+      "des": "HalvorsonJeanne đã sửa đơn hàng 2022090075",
+      "time": "13:47(08/09)",
+      "id": 70
+    },
+    {
+      "des": "HalvorsonJeanne đã tạo đơn hàng 2022090076",
+      "time": "14:04(08/09)",
+      "id": 71
+    },
+    {
+      "des": "HalvorsonJeanne đã tạo đơn hàng 2022090077",
+      "time": "14:04(08/09)",
+      "id": 72
+    },
+    {
+      "des": "HalvorsonJeanne đã xoá đơn hàng 2022090077",
+      "time": "14:04(08/09)",
+      "id": 73
+    },
+    {
+      "des": "HalvorsonJeanne đã sửa đơn hàng 2022090076",
+      "time": "14:04(08/09)",
+      "id": 74
+    },
+    {
+      "des": "HalvorsonJeanne đã sửa đơn hàng 2022090076",
+      "time": "14:04(08/09)",
+      "id": 75
+    },
+    {
+      "des": "HalvorsonJeanne đã tạo đơn hàng 2022090077",
+      "time": "14:21(08/09)",
+      "id": 76
+    },
+    {
+      "des": "HalvorsonJeanne đã xoá đơn hàng 2022090077",
+      "time": "14:22(08/09)",
+      "id": 77
+    },
+    {
+      "des": "HalvorsonJeanne đã tạo đơn hàng 2022090077",
+      "time": "14:22(08/09)",
+      "id": 78
+    },
+    {
+      "des": "HalvorsonJeanne đã tạo đơn hàng 2022090079",
+      "time": "14:23(08/09)",
+      "id": 79
+    },
+    {
+      "des": "HalvorsonJeanne đã xoá đơn hàng 2022090079",
+      "time": "14:23(08/09)",
+      "id": 80
+    },
+    {
+      "des": "HalvorsonJeanne đã xoá đơn hàng 2022090078",
+      "time": "14:23(08/09)",
+      "id": 81
+    },
+    {
+      "des": "HalvorsonJeanne đã tạo đơn hàng 2022090078",
+      "time": "14:24(08/09)",
+      "id": 82
+    },
+    {
+      "des": "HalvorsonJeanne đã tạo đơn hàng 2022090079",
+      "time": "14:24(08/09)",
+      "id": 83
+    },
+    {
+      "des": "HalvorsonJeanne đã xoá đơn hàng 2022090079",
+      "time": "14:24(08/09)",
+      "id": 84
+    },
+    {
+      "des": "HalvorsonJeanne đã xoá đơn hàng 2022090061",
+      "time": "14:25(08/09)",
+      "id": 85
+    },
+    {
+      "des": "HalvorsonJeanne đã xoá đơn hàng 2022090073",
+      "time": "14:25(08/09)",
+      "id": 86
+    },
+    {
+      "des": "HalvorsonJeanne đã tạo đơn hàng 2022090079",
+      "time": "14:27(08/09)",
+      "id": 87
+    },
+    {
+      "des": "HalvorsonJeanne đã tạo đơn hàng 2022090080",
+      "time": "14:27(08/09)",
+      "id": 88
+    },
+    {
+      "des": "HalvorsonJeanne đã xoá đơn hàng 2022090080",
+      "time": "14:27(08/09)",
+      "id": 89
+    },
+    {
+      "des": "HalvorsonJeanne đã tạo đơn hàng 2022090080",
+      "time": "14:27(08/09)",
+      "id": 90
+    },
+    {
+      "des": "HalvorsonJeanne đã xoá đơn hàng 2022090065",
+      "time": "14:27(08/09)",
+      "id": 91
+    },
+    {
+      "des": "HalvorsonJeanne đã tạo đơn hàng 2022090081",
+      "time": "14:29(08/09)",
+      "id": 92
+    },
+    {
+      "des": "HalvorsonJeanne đã tạo đơn hàng 2022090082",
+      "time": "14:29(08/09)",
+      "id": 93
+    },
+    {
+      "des": "HalvorsonJeanne đã tạo đơn hàng 2022090083",
+      "time": "14:30(08/09)",
+      "id": 94
+    },
+    {
+      "des": "HalvorsonJeanne đã sửa đơn hàng 2022090083",
+      "time": "14:30(08/09)",
+      "id": 95
+    },
+    {
+      "des": "HalvorsonJeanne đã xoá đơn hàng 2022090083",
+      "time": "14:30(08/09)",
+      "id": 96
+    },
+    {
+      "des": "HalvorsonJeanne đã sửa đơn hàng 2022090082",
+      "time": "14:32(08/09)",
+      "id": 97
+    },
+    {
+      "des": "HalvorsonJeanne đã tạo đơn hàng 2022090083",
+      "time": "14:32(08/09)",
+      "id": 98
+    },
+    {
+      "des": "HalvorsonJeanne đã sửa đơn hàng 2022090083",
+      "time": "14:33(08/09)",
+      "id": 99
     }
   ]
 }
